@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WebRadioPanel{% endblock title %}
+
+{% block head_style %}
+    {% stylesheets filter='cssrewrite'
+    '@boostrap'
+    'bundles/app/css/font-awesome.min.css'
+    'bundles/app/css/style.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" xmlns="http://www.w3.org/1999/html"/>
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block body_tag %}
+<body class="no-js">
+{% endblock body_tag %}
+
+{% block body %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h1>WebRadioPanel</h1>
+                </div>
+                <div class="col-sm-8">
+                    <h2>Manager de radio</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="bg-countdown" class="text-center">
+        <div id="countdown-container" class="container">
+            <div class="row">
+                <div class="col-md-5 col-md-push-1">
+                    <div id="player">
+                        <h3>Écoute WebRadioPanel</h3>
+                        <div id="titrage" class="container-fluid">
+                            <div id="infos-musique">
+                                <div class="pull-right vote">
+                                    <a class="like" target="#"><i class="fa fa-thumbs-up fa-fw fa-lg"></i></a><br>
+                                    <a class="unlike" target="#"><i class="fa fa-thumbs-down fa-fw fa-lg"></i></a>
+                                </div>
+                                <p>
+                                    <span id="title"></span><br>
+                                    <span id="artist"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div id="lecteur">
+                            <div id="jquery-jplayer" class="jp-jplayer"></div>
+                            <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+                                <div class="jp-type-single">
+                                    <div class="jp-gui jp-interface">
+                                        <div class="jp-volume-controls">
+                                            <a class="jp-mute" role="button" tabindex="0"><i
+                                                        class="fa fa-volume-off"></i></a>
+                                            <a class="jp-volume-max" role="button" tabindex="0"><i
+                                                        class="fa fa-volume-up"></i></a>
+                                            <div class="jp-volume-bar">
+                                                <div class="jp-volume-bar-value"></div>
+                                            </div>
+                                        </div>
+                                        <div class="jp-controls-holder">
+                                            <div class="jp-controls">
+                                                <a class="jp-play" role="button" tabindex="0"><i class="fa fa-play"></i></a>
+                                                <a class="jp-pause" role="button" tabindex="0"><i
+                                                            class="fa fa-pause"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="jp-no-solution">
+                                        <span>Mise à jour requise</span>
+                                        Pour écouter la radio, vous devez soit mettre à jour votre navigateur vers une
+                                        version plus récente ou soit installer <a
+                                                href="http://get.adobe.com/flashplayer/" target="_blank">le plugin
+                                            flash</a>.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .col-md-6 -->
+                <div class="col-md-5">
+                    <div class="dedicaces">
+                        <h3>Envoie ta dédicace en direct</h3>
+                        <form id="form-dedicaces" action="#" method="post" name="form-dedicaces">
+                            <input name="c_name" id="c_name" placeholder="Ton pseudo" size="25" maxlength="25">
+                            <textarea id="c_dedicace" name="c_dedicace" placeholder="Écris ta dédicace"></textarea>
+                            <button type="submit" id="submit-dedicace" class="submit-dedicace">Envoyer au studio <i
+                                        class='fa fa-circle-o-notch fa-spin hidden'></i><i
+                                        class="fa fa-check hidden"></i></button>
+                        </form>
+                        <div id="reponse-ajax"><?php echo $error; ?></div>
+                    </div>
+                </div> <!-- .col-md-6 -->
+            </div>
+        </div>
+    </section>
+{% block footer_tag_start %}
+    <footer class="text-center">
+        {% endblock footer_tag_start %}
+
+        {% block footer %}
+            <div class="container">
+                WebRadioPanel, tous droits réservés.
+            </div>
+        {% endblock footer %}
+
+        {% block footer_tag_end %}
+    </footer>
+{% endblock footer_tag_end %}
+
+{% block foot_script %}
+{% block foot_script_assetic %}
+
+    {% javascripts
+    '@jquery_bootstrap'
+    '@AppBundle/Resources/public/js/jquery.jplayer.min.js'
+    '@AppBundle/Resources/public/js/soundmeter.js'
+    '@AppBundle/Resources/public/js/player.js'
+    '@AppBundle/Resources/public/js/songinfo.js'
+    '@AppBundle/Resources/public/js/custom.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock foot_script_assetic %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+{% endblock foot_script %}
+
+{% endblock %}
+

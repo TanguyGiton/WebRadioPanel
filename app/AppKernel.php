@@ -15,6 +15,12 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new \FOS\UserBundle\FOSUserBundle(),
+            new \JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new \Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+            new \Liip\ImagineBundle\LiipImagineBundle(),
+            new Circle\RestClientBundle\CircleRestClientBundle(),
             new AppBundle\AppBundle(),
         ];
 

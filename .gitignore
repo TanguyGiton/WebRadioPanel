@@ -57,6 +57,12 @@ fabric.properties
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/js
+/web/images
+/web/fonts
+/web/css
+/web/assetic
+
 
 # Assets managed by Bower
 /web/assets/vendor/

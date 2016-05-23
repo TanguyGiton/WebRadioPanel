@@ -65,7 +65,6 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
 
         .sf-reset ul a,
         .sf-reset ul a:hover {
-            background: url(../images/blue-arrow.png) no-repeat right 6px;
             padding-right: 10px;
         }
 

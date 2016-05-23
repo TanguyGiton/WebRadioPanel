@@ -1,9 +1,12 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    radiouid: "29a999e6-a310-433a-b7c1-a58c7f3f269e"
+    apikey: "76ea580b-d7db-4bbe-8f31-fe360ed6b002"
+    cache_dir: "%kernel.cache_dir%/WebRadioPanel"
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.streaminginfo:
+        class: AppBundle\Utils\RadionomyStreaming
+        arguments: ["@circle.restclient", "@cache", "%radiouid%", "%apikey%"]
+    cache:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments: ["%cache_dir%"]
