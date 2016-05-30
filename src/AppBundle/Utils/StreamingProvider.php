@@ -5,5 +5,7 @@ namespace AppBundle\Utils;
 
 abstract class StreamingProvider
 {
-    abstract function getCurrentSong();
+    abstract public function getCurrentSong($albumcover = true);
+
+    abstract public function getCurrentAudience();
 }

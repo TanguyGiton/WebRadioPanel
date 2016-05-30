@@ -6,7 +6,10 @@ parameters:
 services:
     app.streaminginfo:
         class: AppBundle\Utils\RadionomyStreaming
-        arguments: ["@circle.restclient", "@cache", "%radiouid%", "%apikey%"]
-    cache:
+        arguments: ["@circle.restclient", "@phpfilecache", "%radiouid%", "%apikey%"]
+    phpfilecache:
         class: Doctrine\Common\Cache\PhpFileCache
         arguments: ["%cache_dir%"]
+    app.albumcover:
+        class: AppBundle\Utils\AlbumCover
+        arguments: ["@circle.restclient"]

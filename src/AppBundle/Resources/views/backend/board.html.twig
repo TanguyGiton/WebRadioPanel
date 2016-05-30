@@ -1,0 +1,250 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Board - WebRadioPanel{% endblock title %}
+
+    {% block head_style %}
+        {% stylesheets filter='cssrewrite'
+        '@boostrap'
+        '@font_awesome'
+        '@ionicons'
+        '@adminlte_css'
+        'bundles/app/css/backend.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" xmlns="http://www.w3.org/1999/html"/>
+        {% endstylesheets %}
+    {% endblock head_style %}
+
+{% block body_tag %}
+<body class="hold-transition skin-blue sidebar-mini fixed">
+{% endblock body_tag %}
+
+{% block body_start %}
+<div class="wrapper">
+    {% endblock body_start %}
+
+    {% block header %}
+        {# Main Header #}
+        <header class="main-header">
+
+            {# Logo #}
+            <a href="#" class="logo">
+                {# mini logo for sidebar mini 50x50 pixels #}
+                <span class="logo-mini"><b>WR</b>P</span>
+                {# logo for regular state and mobile devices #}
+                <span class="logo-lg"><b>WebRadio</b>Panel</span>
+            </a>
+
+            {# Header Navbar #}
+            <nav class="navbar navbar-static-top" role="navigation">
+                {# Sidebar toggle button#}
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Ouvrir/Fermer la navigation</span>
+                </a>
+                {# Navbar Right Menu #}
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        {# User Account Menu #}
+                        <li class="dropdown user user-menu">
+                            {# Menu Toggle Button #}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {# The user image in the navbar#}
+                                {#<img src="" class="user-image user-image-refresh" alt="{{ app.user.username }}">#}
+                                {# hidden-xs hides the username on small devices so only the image appears. #}
+                                <span class="hidden-xs">{{ app.user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {# The user image in the menu #}
+                                <li class="user-header">
+                                    {#<img src="" class="img-circle" alt="{{ app.user.username }}">#}
+
+                                    <p>
+                                        {{ app.user.username }}
+                                        <small>{# role #}</small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i>
+                                            Mon
+                                            profil</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="{{ path('fos_user_security_logout') }}"
+                                           class="btn btn-default btn-flat"><i
+                                                    class="fa fa-power-off"></i> Déconnexion</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    {% endblock header %}
+
+    {% block sidebar %}
+        {# Left side column. contains the logo and sidebar #}
+        <aside class="main-sidebar">
+
+            {# sidebar: style can be found in sidebar.less #}
+            <section class="sidebar">
+
+                {# Sidebar user panel (optional) #}
+
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        {#<img src="" class="img-circle
+                        user-image-refresh"
+                        alt="{{ app.user.username }}">#}
+                    </div>
+                    <div class="pull-left info">
+                        <p>{{ app.user.username }}</p>
+                        <a href="{{ path('fos_user_security_logout') }}" title="Déconnexion">
+                            <small><i class="fa fa-power-off"></i> Déconnexion</small>
+                        </a>
+                    </div>
+                </div>
+
+                {# Sidebar Menu #}
+                <ul class="sidebar-menu">
+
+                    <li class="header">ANIMATEUR</li>
+                    <li><a href="#"><i
+                                    class="fa fa-dashboard fa-fw"></i> <span>Panel animateur</span></a></li>
+
+
+                    <li class="header">GESTION DE L'ANTENNE</li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-music fa-fw"></i> <span>Musiques</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a
+                                        href="#"><i class="fa fa-circle-o"></i> Sans
+                                    pochette</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="header">ADMINISTRATION</li>
+                    <li><a href="#"><i
+                                    class="fa fa-file-text fa-fw"></i> <span>Log</span></a></li>
+
+                    <li class="header">GÉNÉRAL</li>
+                    <li><a href="#"><i
+                                    class="fa fa-user fa-fw"></i> <span>Mon profil</span></a></li>
+                    <li><a target="_blank" href="http://webmail.easy-radio.fr"><i class="fa fa-envelope fa-fw"></i>
+                            <span>Webmail</span><span
+                                    class="pull-right"><i class="fa fa-external-link"></i></span></a></li>
+                    <li><a href="{{ path('homepage') }}"><i class="fa fa-music"></i> <span>Frontend</span></a></li>
+                </ul>
+                {# /.sidebar-menu #}
+            </section>
+            {# /.sidebar #}
+        </aside>
+    {% endblock sidebar %}
+
+    {% block content %}
+        {# Content Wrapper. Contains page content #}
+        <div class="content-wrapper">
+            {# Content Header (Page header) #}
+            <section class="content-header">
+                <h1>
+                    Panel animateur
+                    <small>Tous les outils pour gérer vos émissions</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>ANIMATEUR</li>
+                    <li class="active"><i class="fa fa-dashboard"></i> Panel animateur</li>
+                </ol>
+            </section>
+
+            {# Main content #}
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon"><i class="ion ion-ios-people-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Auditeurs</span>
+                                <span class="info-box-number"><span id="nb-auditeurs"></span></span>
+                                <div class="progress">
+                                    <div id="max-auditeurs-progress" class="progress-bar" style="width: 0"></div>
+                                </div>
+                    <span class="progress-description">
+                    	<span id="max-auditeurs"></span> auditeurs max.
+                    </span>
+                            </div>{# /.info-box-content #}
+                        </div>
+                    </div>{# /.col #}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-push-6">
+                        <h3>Dédicaces épinglés</h3>
+                        <div id="dedicaces-epingles">
+                            <p class="nothing text-center alert alert-info">Vous pouvez épingler des dédicaces ici en
+                                cliquant sur <i class="fa fa-thumb-tack"></i> en haut à droite de chaque dédicace. Vous
+                                pourrez ensuite organiser votre liste de dédicaces épinglés en modifiant l'ordre de
+                                celles-ci à l'aide d'un cliquer-déposer.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-pull-6">
+                        <h3>Dédicaces</h3>
+                        Dernière mise à jour : <span id="update-time"></span> <span
+                                class="pull-right"><label for="taux-rafraichissement">Rafraichissement</label>
+            <select id="taux-rafraichissement">
+                <option value="5">5 sec</option>
+                <option value="10" selected>10 sec</option>
+                <option value="15">20 sec</option>
+                <option value="30">30 sec</option>
+                <option value="45">45 sec</option>
+                <option value="60">1 min</option>
+                <option value="300">5 min</option>
+            </select></span>
+                        <div class="clearfix"></div>
+                        <div class="height10"></div>
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-info"></i> Filtrage</h4>
+                            Vous pouvez filtrer les dédicaces en cliquant sur le pseudo ou sur l'adresse IP.
+                        </div>
+                        <div id="list-dedicaces">
+
+                        </div>
+                    </div>
+                </div>
+
+            </section> {# /.content #}
+        </div>
+        {# /.content-wrapper #}
+    {% endblock content %}
+
+    {% block footer %}
+        {# Main Footer #}
+        <footer class="main-footer">
+            {# Default to the left #}
+            <strong>Copyright &copy; 2015 <a href="{{ path('homepage') }}">WebRadioPanel</a>.</strong> Tous droits
+            réservés.
+        </footer>
+    {% endblock footer %}
+
+    {% block body_end_before_js %}
+</div> {# ./wrapper #}
+{% endblock body_end_before_js %}
+
+{% block foot_script %}
+
+{% block foot_script_assetic %}
+
+    {% javascripts
+    '@jquery_bootstrap'
+    '@slimscroll'
+    '@AppBundle/Resources/public/js/backend/configapp.js'
+    '@adminlte_js'
+    '@AppBundle/Resources/public/js/backend/board.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock foot_script_assetic %}
+
+{% endblock foot_script %}

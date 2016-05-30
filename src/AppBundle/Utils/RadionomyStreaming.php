@@ -24,24 +24,36 @@ class RadionomyStreaming extends StreamingProvider
         $this->cache = $cache;
     }
 
-    public function getCurrentSong()
+    /**
+     * @param bool $albumcover
+     * @return false|mixed
+     */
+    public function getCurrentSong($albumcover = true)
     {
         if ($cached = $this->cache->fetch("currentsong")) {
             $currentsong = $cached;
         } else {
-            $response = $this->restClient->get('http://api.radionomy.com/currentsong.cfm?radiouid=' . $this->getRadioUID() . '&apikey=' . $this->getApiKey() . '&callmeback=yes&type=xml');
+            $url = 'http://api.radionomy.com/currentsong.cfm?radiouid=' . $this->getRadioUID() . '&apikey=' . $this->getApiKey() . '&callmeback=yes&type=xml&cover=yes';
+
+            $response = $this->restClient->get($url);
 
             $xml = new \SimpleXMLElement($response->getContent());
 
             $currentsong['artist'] = (string)$xml->track->artists;
             $currentsong['title'] = (string)$xml->track->title;
+            $currentsong['albumcover'] = (string)$xml->track->cover;
 
-            $callback = intval((intval($xml->track->callmeback)) / 1000);
+            $callback = (int)((int)$xml->track->callmeback / 1000);
 
             $currentsong['lifetime'] = time() + $callback;
 
-            $this->cache->save("currentsong", $currentsong, $callback);
+            $this->cache->save('currentsong', $currentsong, $callback);
         }
+
+        if (!$albumcover) {
+            unset($currentsong['albumcover']);
+        }
+
         return $currentsong;
     }
 
@@ -75,5 +87,29 @@ class RadionomyStreaming extends StreamingProvider
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+    }
+
+    /**
+     * @return false|mixed
+     */
+    public function getCurrentAudience()
+    {
+        if ($cached = $this->cache->fetch("currentaudience")) {
+            $currentaudience = $cached;
+        } else {
+            $url = 'http://api.radionomy.com/currentaudience.cfm?radiouid=' . $this->getRadioUID() . '&apikey=' . $this->getApiKey();
+
+            $response = $this->restClient->get($url);
+
+            $currentaudience['currentaudience'] = (int)$response->getContent();
+
+            $callback = 5 * 60;
+
+            $currentaudience['lifetime'] = time() + $callback;
+
+            $this->cache->save('currentaudience', $currentaudience, $callback);
+        }
+
+        return $currentaudience;
     }
 }

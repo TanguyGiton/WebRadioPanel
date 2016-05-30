@@ -119,10 +119,14 @@ header h2 {
     left: 0;
     width: 100%;
     text-align: center;
-    color: #fff;
     z-index: 99;
     padding-top: 30px;
     padding-bottom: 30px;
+}
+
+#countdown-container p,
+#countdown-container h3 {
+    color: #fff;
 }
 
 /* ---------------------------------------------- /*
@@ -142,6 +146,7 @@ header h2 {
     overflow: hidden;
     padding: 0;
     background: url(../images/albumcover/default.jpg) no-repeat center center;
+    background-size: contain;
     color: #fff;
     text-transform: capitalize;
     font-size: 16px;
@@ -329,7 +334,7 @@ header h2 {
  * Dédicaces
 /* ---------------------------------------------- */
 
-#c_dedicace {
+#form-dedicaces #form_content {
     display: block;
     width: 80%;
     margin: 0 auto;
@@ -340,18 +345,19 @@ header h2 {
     border: solid 2px #5A5A5A;
 }
 
-#c_name {
+#form-dedicaces #form_name {
     margin-bottom: 10px;
     border: solid 2px #5A5A5A;
     padding: 8px;
     color: #333;
 }
 
-.submit-dedicace {
+#form-dedicaces #form_send {
     display: inline-block;
     padding: 10px 20px;
     text-transform: uppercase;
     margin-top: 15px;
+    color: #fff;
     background: #0056b4;
     border: none;
     font-family: 'Source Sans Pro', sans-serif;
@@ -363,8 +369,8 @@ header h2 {
     transition: all 0.125s ease-in-out 0s;
 }
 
-.submit-dedicace:hover,
-.submit-dedicace:focus {
+#form-dedicaces #form_send:hover,
+#form-dedicaces #form_send:focus {
     background: #5A5A5A;
 }
 

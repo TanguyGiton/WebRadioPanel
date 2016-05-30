@@ -1,1 +1,77 @@
-{% extends 'MopaBootstrapBundle::base.html.twig' %}
+<!DOCTYPE html>
+
+{% block html_tag %}
+<html lang="{{ app.request.locale }}">
+{% endblock html_tag %}
+
+{% block head %}
+    <head>
+        <meta charset="{{ _charset }}"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>{% block title %}WebRadioPanel{% endblock title %}</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% block head_style %}
+        {% endblock head_style %}
+
+        {% block head_script %}
+
+        {% endblock head_script %}
+
+        {% block favicon %}
+            <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />{% endblock %}
+
+        {% block head_bottom %}
+        {% endblock head_bottom %}
+    </head>
+{% endblock head %}
+
+{% block body_tag %}
+<body class="no-js">
+{% endblock body_tag %}
+
+{% block body_start %}
+{% endblock body_start %}
+
+{% block body %}
+    {% block header %}
+    {% endblock header %}
+
+    {% block sidebar %}
+    {% endblock sidebar %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block footer_tag_start %}
+        <footer class="text-center">
+    {% endblock footer_tag_start %}
+
+    {% block footer %}
+        <div class="container">
+            WebRadioPanel, tous droits réservés.
+        </div>
+    {% endblock footer %}
+
+    {% block footer_tag_end %}
+        </footer>
+    {% endblock footer_tag_end %}
+
+    {% block body_end_before_js %}
+    {% endblock body_end_before_js %}
+
+    {% block foot_script %}
+
+        {% block foot_script_assetic %}
+
+        {% endblock foot_script_assetic %}
+
+    {% endblock foot_script %}
+{% endblock body %}
+
+{% block body_end %}
+{% endblock body_end %}
+</body>
+</html>

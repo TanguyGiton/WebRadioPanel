@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
             new \JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
-            new \Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new \Liip\ImagineBundle\LiipImagineBundle(),
             new Circle\RestClientBundle\CircleRestClientBundle(),
             new AppBundle\AppBundle(),

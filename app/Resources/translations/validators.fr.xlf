@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="message_name_min_length">
+                <source>message.name.min_length</source>
+                <target>Votre nom doit comprendre 3 caractères au minimum.</target>
+            </trans-unit>
+            <trans-unit id="message_name_max_length">
+                <source>message.name.max_length</source>
+                <target>Votre nom doit comprendre 30 caractères au maximum.</target>
+            </trans-unit>
+            <trans-unit id="message_content_not_blank">
+                <source>message.content.not_blank</source>
+                <target>Votre message ne doit pas être vide.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

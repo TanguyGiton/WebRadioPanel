@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: fr
+    locale: fr_FR
 
 framework:
     #esi:             ~
@@ -82,7 +82,68 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/jquery/jquery/jquery-2.2.4.js"
                 - "%kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js"
-
+        font_awesome:
+            inputs:
+                - '%kernel.root_dir%/../vendor/components/font-awesome/css/font-awesome.css'
+            filters:
+                - cssrewrite
+        font-awesome-otf:
+                inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/FontAwesome.otf'
+                output: 'fonts/FontAwesome.otf'
+        font-awesome-eot:
+            inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.eot'
+            output: 'fonts/fontawesome-webfont.eot'
+        font-awesome-svg:
+            inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.svg'
+            output: 'fonts/fontawesome-webfont.svg'
+        font-awesome-ttf:
+            inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.ttf'
+            output: 'fonts/fontawesome-webfont.ttf'
+        font-awesome-woff:
+            inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff'
+            output: 'fonts/fontawesome-webfont.woff'
+        font-awesome-woff2:
+            inputs: '%kernel.root_dir%/../vendor/components/font-awesome/fonts/fontawesome-webfont.woff2'
+            output: 'fonts/fontawesome-webfont.woff2'
+        glyphicons-eot:
+            inputs: '%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.eot'
+            output: 'fonts/glyphicons-halflings-regular.eot'
+        glyphicons-svg:
+            inputs: '%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.svg'
+            output: 'fonts/glyphicons-halflings-regular.svg'
+        glyphicons-ttf:
+            inputs: '%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf'
+            output: 'fonts/glyphicons-halflings-regular.ttf'
+        glyphicons-woff:
+            inputs: '%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff'
+            output: 'fonts/glyphicons-halflings-regular.woff'
+        glyphicons-woff2:
+            inputs: '%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff2'
+            output: 'fonts/glyphicons-halflings-regular.woff2'
+        ionicons:
+            inputs: '%kernel.root_dir%/../vendor/driftyco/ionicons/css/ionicons.css'
+            filters:
+                - cssrewrite
+        ionicons-eot:
+            inputs: '%kernel.root_dir%/../vendor/driftyco/ionicons/fonts/ionicons.eot'
+            output: 'fonts/ionicons.eot'
+        ionicons-svg:
+            inputs: '%kernel.root_dir%/../vendor/driftyco/ionicons/fonts/ionicons.svg'
+            output: 'fonts/ionicons.svg'
+        ionicons-ttf:
+            inputs: '%kernel.root_dir%/../vendor/driftyco/ionicons/fonts/ionicons.ttf'
+            output: 'fonts/ionicons.ttf'
+        ionicons-woff:
+            inputs: '%kernel.root_dir%/../vendor/driftyco/ionicons/fonts/ionicons.woff'
+            output: 'fonts/ionicons.woff'
+        adminlte_css:
+            inputs:
+              - "%kernel.root_dir%/../vendor/almasaeed2010/adminlte/dist/css/AdminLTE.css"
+              - '%kernel.root_dir%/../vendor/almasaeed2010/adminlte/dist/css/skins/skin-blue.css'
+        adminlte_js:
+            inputs: '%kernel.root_dir%/../vendor/almasaeed2010/adminlte/dist/js/app.js'
+        slimscroll:
+            inputs: '%kernel.root_dir%/../vendor/almasaeed2010/adminlte/plugins/slimScroll/jquery.slimscroll.js'
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -92,6 +153,7 @@ easy_admin:
     site_name: 'WebRadioPanel'
     entities:
         - AppBundle\Entity\User
+        - AppBundle\Entity\Message
 
 liip_imagine:
     resolvers:

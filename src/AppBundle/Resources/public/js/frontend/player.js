@@ -7,7 +7,7 @@ function initPlayer($streamurl) {
                 oga: $streamurl
             }).jPlayer("play");
         },
-        swfPath: "assets/swf/jquery.jplayer.swf",
+        swfPath: "/bundles/app/swf/jquery.jplayer.swf",
         supplied: "mp3, oga",
         wmode: "window",
         volume: 1.0,

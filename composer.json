@@ -45,14 +45,16 @@
     "javiereguiluz/easyadmin-bundle": "^1.13",
     "jquery/jquery": "2.2.*",
     "twbs/bootstrap": "^3.3",
-    "mopa/bootstrap-bundle": "^3.0",
     "liip/imagine-bundle": "^1.5",
     "components/font-awesome": "^4.6",
-    "ci/restclientbundle": "^1.0"
+    "ci/restclientbundle": "^1.0",
+    "driftyco/ionicons": "^2.0",
+    "almasaeed2010/adminlte": "^2.3"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",
-    "symfony/phpunit-bridge": "^3.0"
+    "symfony/phpunit-bridge": "^3.0",
+    "phpunit/phpunit": "^5.3"
   },
   "scripts": {
     "post-install-cmd": [

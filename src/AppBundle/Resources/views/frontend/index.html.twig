@@ -5,15 +5,11 @@
 {% block head_style %}
     {% stylesheets filter='cssrewrite'
     '@boostrap'
-    'bundles/app/css/font-awesome.min.css'
+    '@font_awesome'
     'bundles/app/css/style.css' %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" xmlns="http://www.w3.org/1999/html"/>
+    <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock head_style %}
-
-{% block body_tag %}
-<body class="no-js">
-{% endblock body_tag %}
 
 {% block body %}
     <header>
@@ -37,7 +33,7 @@
                         <h3>Écoute WebRadioPanel</h3>
                         <div id="titrage" class="container-fluid">
                             <div id="infos-musique">
-                                <div class="pull-right vote">
+                                <div class="pull-right vote hidden">
                                     <a class="like" target="#"><i class="fa fa-thumbs-up fa-fw fa-lg"></i></a><br>
                                     <a class="unlike" target="#"><i class="fa fa-thumbs-down fa-fw fa-lg"></i></a>
                                 </div>
@@ -84,14 +80,13 @@
                 <div class="col-md-5">
                     <div class="dedicaces">
                         <h3>Envoie ta dédicace en direct</h3>
-                        <form id="form-dedicaces" action="#" method="post" name="form-dedicaces">
-                            <input name="c_name" id="c_name" placeholder="Ton pseudo" size="25" maxlength="25">
-                            <textarea id="c_dedicace" name="c_dedicace" placeholder="Écris ta dédicace"></textarea>
-                            <button type="submit" id="submit-dedicace" class="submit-dedicace">Envoyer au studio <i
-                                        class='fa fa-circle-o-notch fa-spin hidden'></i><i
-                                        class="fa fa-check hidden"></i></button>
-                        </form>
-                        <div id="reponse-ajax"><?php echo $error; ?></div>
+                        {{ form_start(dedicaceForm, { 'attr': { 'id': 'form-dedicaces' } }) }}
+
+                        {{ form_widget(dedicaceForm.name, {'attr': {'placeholder': dedicaceForm.name.vars.label} }) }}
+                        {{ form_widget(dedicaceForm.content, {'attr': {'placeholder': dedicaceForm.content.vars.label} }) }}
+                        {{ form_widget(dedicaceForm.send) }}
+                        <div id="reponse-ajax">{{ form_errors(dedicaceForm) }}{{ form_errors(dedicaceForm.name) }}{{ form_errors(dedicaceForm.content) }}</div>
+                        {{ form_end(dedicaceForm) }}
                     </div>
                 </div> <!-- .col-md-6 -->
             </div>
@@ -111,28 +106,22 @@
     </footer>
 {% endblock footer_tag_end %}
 
-{% block foot_script %}
-{% block foot_script_assetic %}
+    {% block foot_script %}
+        {% block foot_script_assetic %}
 
-    {% javascripts
-    '@jquery_bootstrap'
-    '@AppBundle/Resources/public/js/jquery.jplayer.min.js'
-    '@AppBundle/Resources/public/js/soundmeter.js'
-    '@AppBundle/Resources/public/js/player.js'
-    '@AppBundle/Resources/public/js/songinfo.js'
-    '@AppBundle/Resources/public/js/custom.js' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+            {% javascripts
+            '@jquery_bootstrap'
+            '@AppBundle/Resources/public/js/frontend/jquery.jplayer.min.js'
+            '@AppBundle/Resources/public/js/frontend/soundmeter.js'
+            '@AppBundle/Resources/public/js/frontend/player.js'
+            '@AppBundle/Resources/public/js/frontend/songinfo.js'
+            '@AppBundle/Resources/public/js/frontend/senddedicace.js'
+            '@AppBundle/Resources/public/js/frontend/custom.js' %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
 
-{% endblock foot_script_assetic %}
+        {% endblock foot_script_assetic %}
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
-{% endblock foot_script %}
+    {% endblock foot_script %}
 
 {% endblock %}
-

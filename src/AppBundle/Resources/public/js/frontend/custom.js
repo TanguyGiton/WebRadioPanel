@@ -1,5 +1,8 @@
 $(function () {
 
+    /* Init JS */
+    $('body').removeClass('no-js').addClass('js');
+
     /* SoundMeter */
     initSoundMeter(50);
 
@@ -9,4 +12,7 @@ $(function () {
 
     /* SongInfo */
     updateSongInfo();
+
+    /* Ajax Send Dedicace */
+    ajaxSendDedicace();
 });
