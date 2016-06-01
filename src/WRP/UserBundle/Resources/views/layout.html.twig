@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %} - {{ parent() }}{% endblock title %}
+
+{% block head_style %}
+    {% stylesheets filter='cssrewrite'
+    '@boostrap'
+    '@font_awesome'
+    '@adminlte_css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" media="all" xmlns="http://www.w3.org/1999/html"/>
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block body_tag %}
+<body class="hold-transition login-page">
+{% endblock body_tag %}
+
+{% block body %}
+<div class="login-box">
+    <div class="login-logo">
+        <b>WebRadio</b>Panel
+    </div>
+    <div class="login-box-body">
+        {% block login_box_body %}
+            <p class="login-box-msg">
+                {% block login_box_message %}
+                {% endblock login_box_message %}
+            </p>
+            {% block login_box_alert %}
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="callout callout-{{ type }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            {% endblock login_box_alert %}
+            {% block login_box_content %}
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            {% endblock login_box_content %}
+        {% endblock login_box_body %}
+    </div>
+</div>
+<!-- /.login-box-body -->
+
+{% block foot_script %}
+    {% block foot_script_assetic %}
+
+        {% javascripts
+        '@jquery_bootstrap' %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    {% endblock foot_script_assetic %}
+
+{% endblock foot_script %}
+{% endblock body %}

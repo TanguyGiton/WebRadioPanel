@@ -11,9 +11,9 @@ function updateSongInfo() {
 
     var nbMaxChar = 35;
 
-    $.getJSON('ajax/currentsong.json', function (data) {
+    var $url = Routing.generate('currentsong');
 
-        console.log(data);
+    $.getJSON($url, function (data) {
 
         var $albumcover = $("#titrage");
         var $artist = $("#artist");

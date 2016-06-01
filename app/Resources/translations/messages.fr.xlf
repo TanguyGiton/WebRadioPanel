@@ -14,6 +14,30 @@
                 <source>label.sumbit</source>
                 <target>Envoyer au studio</target>
             </trans-unit>
+            <trans-unit id="role_super_admin">
+                <source>ROLE_SUPER_ADMIN</source>
+                <target>Super Administrateur</target>
+            </trans-unit>
+            <trans-unit id="role_admin">
+                <source>ROLE_ADMIN</source>
+                <target>Administateur</target>
+            </trans-unit>
+            <trans-unit id="role_radio_host">
+                <source>ROLE_RADIO_HOST</source>
+                <target>Animateur</target>
+            </trans-unit>
+            <trans-unit id="role_programme_director">
+                <source>ROLE_PROGRAMME_DIRECTOR</source>
+                <target>Directeur d'antenne</target>
+            </trans-unit>
+            <trans-unit id="role_dj">
+                <source>ROLE_DJ</source>
+                <target>DJ</target>
+            </trans-unit>
+            <trans-unit id="role_user">
+                <source>ROLE_USER</source>
+                <target>Utilisateur</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

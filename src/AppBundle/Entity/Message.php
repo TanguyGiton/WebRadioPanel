@@ -40,6 +40,7 @@ class Message
      * @ORM\Column(name="IPAdress", type="string", length=45)
      *
      * @Assert\NotBlank()
+     * 
      */
     private $iPAdress;
 

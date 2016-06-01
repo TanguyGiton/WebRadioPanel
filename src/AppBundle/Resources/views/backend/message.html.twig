@@ -1,0 +1,19 @@
+<div id="dedicace-{{ message.id }}" class="box dedicace">
+    <div class="box-header">
+        <h4 class="box-title"><span class="name" data-toggle="tooltip" data-placement="bottom"
+                                    title="Filtrer par nom">{{ message.name }}</span> <span class="ip"
+                                                                                            data-toggle="tooltip"
+                                                                                            data-placement="bottom"
+                                                                                            title="Filtrer par adresse IP">({{ message.iPAdress }}
+                )</span></h4>
+        <div class="box-tools pull-right">
+            <a class="pin" target="#"><i class="fa fa-thumb-tack fa-lg"></i></a>
+        </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        {{ message.content }}
+        <div>
+            <span class="time">{{ message.sendAt|date('d/m/Y H:i:s') }}</span>
+        </div>
+    </div><!-- /.box-body -->
+</div> <!-- /.box .dedicace -->

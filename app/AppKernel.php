@@ -5,6 +5,12 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
+    public function __construct($environment, $debug)
+    {
+        date_default_timezone_set('Europe/Paris');
+        parent::__construct($environment, $debug);
+    }
+
     public function registerBundles()
     {
         $bundles = [
@@ -17,9 +23,13 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
+            new \WRP\UserBundle\WRPUserBundle(),
             new \JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new \Liip\ImagineBundle\LiipImagineBundle(),
             new Circle\RestClientBundle\CircleRestClientBundle(),
+            new \FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new \Vich\UploaderBundle\VichUploaderBundle(),
+            new \Misd\PhoneNumberBundle\MisdPhoneNumberBundle(),
             new AppBundle\AppBundle(),
         ];
 
@@ -28,6 +38,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new \CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         return $bundles;

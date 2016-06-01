@@ -1,0 +1,55 @@
+{% extends '@WRPUser/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Connexion{{ parent() }}{% endblock title %}
+
+{% block login_box_message %}
+    Connectez-vous pour accéder au panel.
+{% endblock login_box_message %}
+
+{% block login_box_alert %}
+    {% if error %}
+        <div class="callout callout-danger"
+             role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+{% endblock login_box_alert %}
+
+{% block login_box_content %}
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="{{ 'security.login.username'|trans }}"
+                   id="username" name="_username" value="{{ last_username }}" required="required"/>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="{{ 'security.login.password'|trans }}"
+                   id="password" name="_password" required="required"/>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-7 col-sm-8">
+                <label>
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                    {{ 'security.login.remember_me'|trans }}</label>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-5 col-sm-4">
+                <input type="submit" id="_submit" name="_submit" class="btn btn-primary btn-block btn-flat"
+                       value="{{ 'security.login.submit'|trans }}"/>
+            </div>
+            <!-- /.col -->
+        </div>
+    </form>
+
+    <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>
+    <hr>
+    <div class="text-center">
+        <p>
+            - OU -
+        </p>
+        <a href="{{ path('homepage') }}">Retourner écouter la radio</a>
+    </div>
+{% endblock login_box_content %}

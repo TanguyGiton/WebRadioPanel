@@ -1,0 +1,107 @@
+{% extends '@App/backend/layout.html.twig' %}
+
+{% block title %}Board{{ parent() }}{% endblock title %}
+
+
+{% block content_header %}
+    <h1>
+        Mon profil
+        <small>Gérer votre profil</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>GÉNÉRAL</li>
+        <li class="active"><i class="fa fa-user"></i> Mon profil</li>
+    </ol>
+{% endblock content_header %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <form enctype="multipart/form-data" action="#" method="post" name="image_upload_form"
+                          id="image_upload_form">
+                        <div class="image-upload-container">
+                            <div class="overlay">Modifier la photo</div>
+                            <div class="progress"><i class="fa fa-refresh fa-spin"></i></div>
+                            <img class="profile-user-img img-responsive img-circle user-image-refresh"
+                                 src="{{ imageUrl }}" alt="{{ app.user.username }}">
+                            <input type="file" accept="image/*" name="image_upload_file" id="image_upload_file">
+                        </div>
+                    </form>
+                    <h3 class="profile-username text-center">{{ app.user.username }}</h3>
+                    <p class="text-muted text-center">
+                        {% for role in app.user.roles %}
+                            {{ role|trans }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                    <hr>
+                    <p class="text-muted">
+                        <i class="fa fa-phone fa-fw"></i> <br>
+                        <i class="fa fa-envelope fa-fw"></i> {{ app.user.email }}
+                    </p>
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-9">
+            <!-- About Me Box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Mes informations</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-birthday-cake fa-fw margin-r-5"></i> Anniversaire</strong>
+                    <p class="text-muted">
+                        {{ app.user.birthdate|date("d/m/Y") }}
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-map-marker fa-fw margin-r-5"></i> Adresse</strong>
+                    <p class="text-muted">
+                        {{ app.user.address }}<br>
+                        {{ app.user.postcode }} {{ app.user.city }}
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-users fa-fw margin-r-5"></i> Social</strong>
+                    <div class="height10"></div>
+                    <ul class="list-unstyled">
+                        <li class="btn btn-social-icon btn-facebook">
+                            <i class="fa fa-facebook"></i>
+                        </li>
+                        <li class="btn btn-social-icon btn-twitter">
+                            <i class="fa fa-twitter"></i>
+                        </li>
+                        <li class="btn btn-social-icon btn-instagram">
+                            <i class="fa fa-instagram"></i>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <strong><i class="fa fa-file-text-o fa-fw margin-r-5"></i> Description</strong>
+                    <p>{{ app.user.description }}</p>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div>
+{% endblock main_content %}
+
+{% block foot_script_assetic %}
+
+    {% javascripts
+    'bundles/fosjsrouting/js/router.js'
+    'js/fos_js_routes.js'
+    '@jquery_bootstrap'
+    '@slimscroll'
+    '@AppBundle/Resources/public/js/backend/configapp.js'
+    '@adminlte_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock foot_script_assetic %}

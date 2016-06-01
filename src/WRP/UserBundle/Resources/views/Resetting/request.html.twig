@@ -1,0 +1,35 @@
+{% extends '@WRPUser/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Connexion{{ parent() }}{% endblock title %}
+
+{% block login_box_message %}
+    Récupérez votre mot de passe.
+{% endblock login_box_message %}
+
+{% block login_box_content %}
+    {% if invalid_username is defined %}
+        <div class="callout callout-danger"
+             role="alert">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
+    {% endif %}
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <div class="form-group has-feedback">
+            <input type="text" id="username" name="username" required="required"
+                   placeholder="{{ 'resetting.request.username'|trans }}" class="form-control"/>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <button type="submit"
+                        class="btn btn-primary btn-block btn-flat">{{ 'resetting.request.submit'|trans }}</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="text-center">
+        <p>
+            - OU -
+        </p>
+        <a href="{{ path('fos_user_security_login') }}">Se connecter</a>
+    </div>
+{% endblock login_box_content %}

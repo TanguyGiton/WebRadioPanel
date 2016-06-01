@@ -15,6 +15,7 @@ class IndexController extends Controller
      * @Route("/", name="homepage")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
      */
     public function indexAction(Request $request)
     {

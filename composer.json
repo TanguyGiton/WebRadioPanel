@@ -49,7 +49,12 @@
     "components/font-awesome": "^4.6",
     "ci/restclientbundle": "^1.0",
     "driftyco/ionicons": "^2.0",
-    "almasaeed2010/adminlte": "^2.3"
+    "almasaeed2010/adminlte": "^2.3",
+    "friendsofsymfony/jsrouting-bundle": "^1.6",
+    "components/jqueryui": "^1.11",
+    "coresphere/console-bundle": "^0.4.0",
+    "vich/uploader-bundle": "^1.1",
+    "misd/phone-number-bundle": "^1.1"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

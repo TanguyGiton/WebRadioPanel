@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr_FR
+    default_profile_image: "bundles/app/images/albumcover/default.jpg"
 
 framework:
     #esi:             ~
@@ -36,6 +37,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        default_profile_image: "%default_profile_image%"
 
 # Doctrine Configuration
 doctrine:
@@ -47,12 +50,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
+        types:
+            phone_number: Misd\PhoneNumberBundle\Doctrine\DBAL\Types\PhoneNumberType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -144,16 +143,55 @@ assetic:
             inputs: '%kernel.root_dir%/../vendor/almasaeed2010/adminlte/dist/js/app.js'
         slimscroll:
             inputs: '%kernel.root_dir%/../vendor/almasaeed2010/adminlte/plugins/slimScroll/jquery.slimscroll.js'
+        jqueryui:
+            inputs: '%kernel.root_dir%/../vendor/components/jqueryui/jquery-ui.js'
+
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
+    from_email:
+        address: noreply@webradiopanel.com
+        sender_name: WebRadioPanel
+    registration:
+        confirmation:
+            enabled: true
 
 easy_admin:
     site_name: 'WebRadioPanel'
+    formats:
+        date: 'd/m/Y'
+        time: 'H:i'
+        datetime: 'd/m/Y H:i:s'
     entities:
-        - AppBundle\Entity\User
-        - AppBundle\Entity\Message
+        User:
+            class: AppBundle\Entity\User
+            label: 'Utilisateurs'
+            list:
+                title: 'Les utilisateurs'
+                fields:
+                    - { property: 'imageName', type: 'image', base_path: '/images/profile/' }
+                    - 'username'
+                    - 'firstName'
+                    - 'lastName'
+                    - 'email'
+                    - 'lastLogin'
+                    - 'enabled'
+
+            form:
+                fields:
+                    - 'username'
+                    - 'firstName'
+                    - 'lastName'
+                    - 'email'
+                    - 'address'
+                    - 'postcode'
+                    - 'city'
+                    - { property: 'mobilePhoneNumber', type: Misd\PhoneNumberBundle\Form\Type\PhoneNumberType, type_options: { default_region: 'FR', format: 'national' } }
+                    - { property: 'birthdate', type_options: { widget: 'single_text'} }
+                    - { property: 'imageFile', type: 'file' }
+        Message:
+            class: AppBundle\Entity\Message
 
 liip_imagine:
     resolvers:
@@ -171,3 +209,14 @@ circle_rest_client:
     curl:
         defaults:
             CURLOPT_SSL_VERIFYPEER: false
+
+fos_js_routing:
+    routes_to_expose: [listenersmessages, currentaudience, currentsong]
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        profile_picture:
+            uri_prefix: /images/profile
+            upload_destination: "%kernel.root_dir%/../web/images/profile"
+            namer: vich_uploader.namer_uniqid

@@ -1,0 +1,19 @@
+{% extends '@WRPUser/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Réinitialisation{{ parent() }}{% endblock title %}
+
+{% block login_box_message %}
+    Réinitialisez votre mot de passe.
+{% endblock login_box_message %}
+
+{% block login_box_content %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+    {{ form_widget(form) }}
+    <div>
+        <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'resetting.reset.submit'|trans }}</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock login_box_content %}
