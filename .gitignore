@@ -79,3 +79,6 @@ fabric.properties
 
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
+src/AppBundle/Entity/User.php~
+
+/deploy.php

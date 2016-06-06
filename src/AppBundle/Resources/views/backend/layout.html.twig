@@ -21,6 +21,7 @@
 
 {% block body_tag %}
 <body class="hold-transition skin-blue sidebar-mini fixed">
+
 {% endblock body_tag %}
 
 {% block body_start %}
@@ -54,7 +55,7 @@
                             {# Menu Toggle Button #}
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {# The user image in the navbar#}
-                                <img src="{{ imageUrl }}" class="user-image user-image-refresh"
+                                <img src="{{ imageUrl }}" class="user-image user-image-refresh img-square"
                                      alt="{{ app.user.username }}">
                                 {# hidden-xs hides the username on small devices so only the image appears. #}
                                 <span class="hidden-xs">{{ app.user.username }}</span>
@@ -95,6 +96,9 @@
     {% endblock header %}
 
     {% block sidebar %}
+
+        {% set route = app.request.attributes.get('_route') %}
+
         {# Left side column. contains the logo and sidebar #}
         <aside class="main-sidebar">
 
@@ -120,7 +124,7 @@
                 <ul class="sidebar-menu">
                     {% if is_granted('ROLE_RADIO_HOST') %}
                         <li class="header">{{ 'ROLE_RADIO_HOST'|trans|upper }}</li>
-                        <li {% if app.request.attributes.get('_route') == 'board' %}class="active"{% endif %}><a
+                        <li {% if route == 'board' %}class="active"{% endif %}><a
                                     href="{{ path('board') }}"><i
                                         class="fa fa-dashboard fa-fw"></i> <span>Panel animateur</span></a></li>
                     {% endif %}
@@ -142,8 +146,19 @@
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="header">{{ 'ROLE_ADMIN'|trans|upper }}</li>
-                        <li><a href="#"><i
-                                        class="fa fa-file-text fa-fw"></i> <span>Log</span></a></li>
+                        <li class="{% if route in ['fos_user_registration_register'] %}active{% endif %} treeview">
+                            <a href="#">
+                                <i class="fa fa-user fa-fw"></i> <span>Utilisateurs</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li {% if route == 'fos_user_registration_register' %}class="active"{% endif %}>
+                                    <a href="{{ path('fos_user_registration_register') }}">
+                                        <i class="fa fa-plus fa-fw"></i> Nouvel utilisateur
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {% endif %}
 
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -159,7 +174,7 @@
                     {% endif %}
 
                     <li class="header">GÉNÉRAL</li>
-                    <li {% if app.request.attributes.get('_route') == 'fos_user_profile_show' %}class="active"{% endif %}>
+                    <li {% if route == 'fos_user_profile_show' %}class="active"{% endif %}>
                         <a href="{{ path('fos_user_profile_show') }}"><i
                                     class="fa fa-user fa-fw"></i> <span>Mon profil</span></a></li>
                     <li><a href="{{ path('homepage') }}"><i class="fa fa-music"></i> <span>Radio</span></a></li>

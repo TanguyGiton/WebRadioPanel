@@ -154,6 +154,8 @@ fos_user:
         address: noreply@webradiopanel.com
         sender_name: WebRadioPanel
     registration:
+        form:
+            type: AppBundle\Form\RegistrationType
         confirmation:
             enabled: true
 
@@ -176,11 +178,13 @@ easy_admin:
                     - 'lastName'
                     - 'email'
                     - 'lastLogin'
-                    - 'enabled'
+                    - 'locked'
+                    - 'roles'
 
             form:
                 fields:
                     - 'username'
+                    - 'password'
                     - 'firstName'
                     - 'lastName'
                     - 'email'
@@ -190,6 +194,11 @@ easy_admin:
                     - { property: 'mobilePhoneNumber', type: Misd\PhoneNumberBundle\Form\Type\PhoneNumberType, type_options: { default_region: 'FR', format: 'national' } }
                     - { property: 'birthdate', type_options: { widget: 'single_text'} }
                     - { property: 'imageFile', type: 'file' }
+                    - 'description'
+                    - 'locked'
+                    - 'expired'
+                    - 'credentialsExpired'
+
         Message:
             class: AppBundle\Entity\Message
 

@@ -13,3 +13,11 @@ services:
     app.albumcover:
         class: AppBundle\Utils\AlbumCover
         arguments: ["@circle.restclient"]
+    app.form.registration:
+        class: AppBundle\Form\RegistrationType
+        arguments: ["@app.roleshelper"]
+        tags:
+            - { name: form.type, alias: app_user_registration }
+    app.roleshelper:
+        class: AppBundle\Utils\RolesHelper
+        arguments: ["%security.role_hierarchy.roles%"]

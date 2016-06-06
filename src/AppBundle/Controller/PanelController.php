@@ -20,6 +20,6 @@ class PanelController extends Controller
      */
     public function boardAction(Request $request)
     {
-        return $this->render('@App/backend/board.html.twig');
+        return $this->render('@App/backend/radiohost/board.html.twig');
     }
 }

@@ -1,0 +1,43 @@
+{% extends '@App/backend/layout.html.twig' %}
+
+{% block title %}Nouvel utilisateur{{ parent() }}{% endblock title %}
+
+
+{% block content_header %}
+    <h1>
+        Nouvel utilisateur
+        <small>Créer un utilisateur</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li>{{ 'ROLE_ADMIN'|trans|upper }}</li>
+        <li><i class="fa fa-user"></i> Utilisateurs</li>
+        <li class="active"><i class="fa fa-plus"></i> Nouvel utilisateur</li>
+    </ol>
+{% endblock content_header %}
+
+{% block main_content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    {% include "@App/backend/admin/register_form.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block foot_script_assetic %}
+
+    {% javascripts
+    'bundles/fosjsrouting/js/router.js'
+    'js/fos_js_routes.js'
+    '@jquery_bootstrap'
+    '@slimscroll'
+    '@AppBundle/Resources/public/js/backend/configapp.js'
+    '@adminlte_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock foot_script_assetic %}

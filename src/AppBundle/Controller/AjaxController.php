@@ -73,7 +73,7 @@ class AjaxController extends Controller
     public function listenersMessagesAction(Request $request)
     {
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_RADIO_HOST');
 
         if ($request->isXmlHttpRequest()) {
 
@@ -104,7 +104,7 @@ class AjaxController extends Controller
 
                 $response = '';
                 foreach ($messages as $message) {
-                    $response .= $this->get('twig')->render('@App/backend/message.html.twig', [
+                    $response .= $this->get('twig')->render('@App/backend/template/message.html.twig', [
                         'message' => $message
                     ]);
                 }

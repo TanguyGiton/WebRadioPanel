@@ -38,6 +38,38 @@
                 <source>ROLE_USER</source>
                 <target>Utilisateur</target>
             </trans-unit>
+            <trans-unit id="label_first_name">
+                <source>label.first_name</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="label_last_name">
+                <source>label.last_name</source>
+                <target>Nom de famille</target>
+            </trans-unit>
+            <trans-unit id="label_birthdate">
+                <source>label.birthdate</source>
+                <target>Date de naissance</target>
+            </trans-unit>
+            <trans-unit id="label_mobile_phone_number">
+                <source>label.mobile_phone_number</source>
+                <target>Portable</target>
+            </trans-unit>
+            <trans-unit id="label_address">
+                <source>label.address</source>
+                <target>Adresse</target>
+            </trans-unit>
+            <trans-unit id="label_postcode">
+                <source>label.postcode</source>
+                <target>Code postale</target>
+            </trans-unit>
+            <trans-unit id="label_city">
+                <source>label.city</source>
+                <target>Ville</target>
+            </trans-unit>
+            <trans-unit id="label_roles">
+                <source>label.roles</source>
+                <target>Roles</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
