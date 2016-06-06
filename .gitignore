@@ -81,4 +81,4 @@ fabric.properties
 */Entity/*~
 src/AppBundle/Entity/User.php~
 
-/deploy.php
+deploy.php
