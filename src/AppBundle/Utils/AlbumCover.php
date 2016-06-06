@@ -20,7 +20,7 @@ class AlbumCover
     {
         $result = $this->searchOnItunes($title . ' ' . $artist, 1);
 
-        if (0 === count($result)) {
+        if (0 !== count($result)) {
             $albumcoverurl = $result[0]['albumcover'];
 
             $albumcoverurl = str_replace('100x100', '300x300', $albumcoverurl);
