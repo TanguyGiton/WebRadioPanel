@@ -14,3 +14,27 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+security:
+    providers:
+        in_memory:
+            memory:
+                users:
+                    superadmin:
+                        password: pass
+                        roles: 'ROLE_SUPER_ADMIN'
+                    admin:
+                        password: pass
+                        roles: 'ROLE_ADMIN'
+                    radiohost:
+                        password: pass
+                        roles: 'ROLE_RADIO_HOST'
+                    user:
+                        password: pass
+                        roles: 'ROLE_USER'
+    encoders:
+            Symfony\Component\Security\Core\User\User: plaintext
+    firewalls:
+        main:
+            http_basic:
+                provider: in_memory

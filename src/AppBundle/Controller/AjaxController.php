@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,6 +59,7 @@ class AjaxController extends Controller
 
     /**
      * @Route("ajax/listenersmessages.json", name="listenersmessages")
+     * @Security("has_role('ROLE_RADIO_HOST')")
      *
      * @param Request $request
      * @return Response
@@ -72,9 +74,6 @@ class AjaxController extends Controller
      */
     public function listenersMessagesAction(Request $request)
     {
-
-        $this->denyAccessUnlessGranted('ROLE_RADIO_HOST');
-
         if ($request->isXmlHttpRequest()) {
 
             $last = $request->query->get('last', '');

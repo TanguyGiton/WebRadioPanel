@@ -61,4 +61,21 @@ class AjaxControllerTest extends WebTestCase
         static::assertTrue(is_int($data['lifetime']));
         static::assertTrue(is_int($data['callback']));
     }
+
+    public function testListenersMessagesAction()
+    {
+        $client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'radiohost',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+
+        $client->request('GET', '/ajax/listenersmessages.json', [], [], [
+            'HTTP_X-Requested-With' => 'XMLHttpRequest',
+        ]);
+
+        $content = $client->getResponse()->getContent();
+
+        static::assertContains('data', $content);
+        static::assertContains('datetime', $content);
+    }
 }
