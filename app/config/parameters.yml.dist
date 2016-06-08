@@ -12,7 +12,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    site_domain:       ~
+    site_domain:       webradiopanel
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
