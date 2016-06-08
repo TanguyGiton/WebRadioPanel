@@ -151,7 +151,7 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
-        address: noreply@webradiopanel.com
+        address: 'noreply@%site_domain%'
         sender_name: WebRadioPanel
     registration:
         form:
