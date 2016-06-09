@@ -174,6 +174,7 @@ easy_admin:
             list:
                 title: 'Les utilisateurs'
                 fields:
+                    - 'id'
                     - { property: 'imageName', type: 'image', base_path: '/images/profile/' }
                     - 'username'
                     - 'firstName'
@@ -195,7 +196,7 @@ easy_admin:
                     - 'city'
                     - { property: 'mobilePhoneNumber', type: Misd\PhoneNumberBundle\Form\Type\PhoneNumberType, type_options: { default_region: 'FR', format: 'national' } }
                     - { property: 'birthdate', type_options: { widget: 'single_text'} }
-                    - { property: 'imageFile', type: 'file' }
+                    - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
                     - 'description'
                     - 'locked'
                     - 'expired'
@@ -203,6 +204,23 @@ easy_admin:
 
         Message:
             class: AppBundle\Entity\Message
+        Song:
+            class: AppBundle\Entity\Song
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
+                    - 'title'
+                    - 'artist'
+                    - 'addtime'
+                    - 'updatetime'
+            form:
+                fields:
+                    - 'title'
+                    - 'artist'
+                    - 'addtime'
+                    - 'updatetime'
+                    - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
 
 liip_imagine:
     resolvers:
@@ -230,4 +248,8 @@ vich_uploader:
         profile_picture:
             uri_prefix: /images/profile
             upload_destination: "%kernel.root_dir%/../web/images/profile"
+            namer: vich_uploader.namer_uniqid
+        album_cover:
+            uri_prefix: /images/albumcover
+            upload_destination: "%kernel.root_dir%/../web/images/albumcover"
             namer: vich_uploader.namer_uniqid

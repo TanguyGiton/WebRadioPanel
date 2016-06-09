@@ -26,11 +26,13 @@ class RadionomyInfoTest extends WebTestCase
         static::assertNotNull($data['artist']);
         static::assertNotNull($data['albumcover']);
         static::assertNotNull($data['lifetime']);
+        static::assertNotNull($data['uid']);
 
         static::assertTrue(is_string($data['title']));
         static::assertTrue(is_string($data['artist']));
         static::assertTrue(is_string($data['albumcover']));
         static::assertTrue(is_int($data['lifetime']));
+        static::assertTrue(is_string($data['uid']));
 
         $data2 = $this->StreamInfo->getCurrentSong(false);
 

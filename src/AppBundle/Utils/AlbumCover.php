@@ -11,11 +11,20 @@ class AlbumCover
 
     private $country = 'fr';
 
+    /**
+     * AlbumCover constructor.
+     * @param RestClient $restClient
+     */
     public function __construct(RestClient $restClient)
     {
         $this->restClient = $restClient;
     }
 
+    /**
+     * @param $title
+     * @param $artist
+     * @return mixed|null
+     */
     public function getImageOnItunes($title, $artist)
     {
         $result = $this->searchOnItunes($title . ' ' . $artist, 1);
@@ -35,6 +44,11 @@ class AlbumCover
         return null;
     }
 
+    /**
+     * @param $query
+     * @param int $limit
+     * @return array
+     */
     public function searchOnItunes($query, $limit = 5)
     {
         $result = [];

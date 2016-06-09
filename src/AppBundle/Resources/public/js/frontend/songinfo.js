@@ -23,7 +23,7 @@ function updateSongInfo() {
             $artist.text(shortString(data.artist, nbMaxChar)).attr('title', data.artist);
             $title.text(shortString(data.title, nbMaxChar)).attr('title', data.title);
 
-            if (data.albumcover != "") {
+            if (data.albumcover) {
                 $albumcover.css("background", "url(" + data.albumcover + ") no-repeat center center");
                 $albumcover.css("background-size", "contain");
             } else {

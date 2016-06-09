@@ -39,6 +39,7 @@ class RadionomyStreaming extends StreamingProvider
 
             $xml = new \SimpleXMLElement($response->getContent());
 
+            $currentsong['uid'] = (string)$xml->track->uniqueid;
             $currentsong['artist'] = (string)$xml->track->artists;
             $currentsong['title'] = (string)$xml->track->title;
             $currentsong['albumcover'] = (string)$xml->track->cover;
@@ -50,7 +51,7 @@ class RadionomyStreaming extends StreamingProvider
             $this->cache->save('currentsong', $currentsong, $callback);
         }
 
-        if (!$albumcover) {
+        if (!$albumcover || empty($currentsong['albumcover'])) {
             unset($currentsong['albumcover']);
         }
 
@@ -94,7 +95,7 @@ class RadionomyStreaming extends StreamingProvider
      */
     public function getCurrentAudience()
     {
-        if ($cached = $this->cache->fetch("currentaudience")) {
+        if ($cached = $this->cache->fetch('currentaudience')) {
             $currentaudience = $cached;
         } else {
             $url = 'http://api.radionomy.com/currentaudience.cfm?radiouid=' . $this->getRadioUID() . '&apikey=' . $this->getApiKey();
