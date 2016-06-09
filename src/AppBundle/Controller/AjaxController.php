@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Song;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,61 +25,19 @@ class AjaxController extends Controller
     public function currentSongAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $result = array();
+            $song = $this->get('app.songprovider')->processCurrentSong();
 
-            $streaminginfo = $this->get('app.streaminginfo')->getCurrentSong();
-
-            $em = $this->getDoctrine()->getManager();
-
-            $song = $em->getRepository('AppBundle:Song')->findOneBy(array(
-                'uid' => $streaminginfo['uid']
-            ));
+            $result['title'] = $song->getTitle();
+            $result['artist'] = $song->getArtist();
+            $result['lifetime'] = $song->getLifetime();
 
             $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
 
-            if ($song) {
-                $result['title'] = $song->getTitle();
-                $result['artist'] = $song->getArtist();
-            } else {
-                $song = new Song();
-                $song->setUid($streaminginfo['uid'])
-                    ->setTitle($streaminginfo['title'])
-                    ->setArtist($streaminginfo['artist']);
-
-                if (!empty($streaminginfo['albumcover'])) {
-                    $albumcover = $streaminginfo['albumcover'];
-                } else {
-                    $albumcover = $this->get('app.albumcover')->getImageOnItunes($song->getTitle(), $song->getArtist());
-                }
-
-                if ($albumcover) {
-
-                    $infoFile = new \SplFileInfo($albumcover);
-                    $basename = $infoFile->getBasename();
-
-                    $path = $this->getParameter('kernel.cache_dir') . '/' . $basename;
-
-                    file_put_contents($path, file_get_contents($albumcover));
-
-                    $albumcoverFile = new UploadedFile($path, $basename, null, null, null, true);
-
-                    $song->setImageFile($albumcoverFile);
-
-
-                }
-
-                $em->persist($song);
-                $em->flush();
-            }
-
             $result['albumcover'] = $helper->asset($song, 'imageFile');
 
-            $result = array_merge($streaminginfo, $result);
-
-            $result['callback'] = $streaminginfo['lifetime'] - time();
-
+            $result['callback'] = $song->getLifetime() - time();
+            
             return new JsonResponse($result);
-
         } else {
             throw $this->createNotFoundException();
         }

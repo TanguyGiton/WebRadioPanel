@@ -21,3 +21,6 @@ services:
     app.roleshelper:
         class: AppBundle\Utils\RolesHelper
         arguments: ["%security.role_hierarchy.roles%"]
+    app.songprovider:
+        class: AppBundle\Utils\SongProvider
+        arguments: ["@app.albumcover", "@app.streaminginfo", "@doctrine.orm.entity_manager", "%kernel.cache_dir%"]

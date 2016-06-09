@@ -24,8 +24,8 @@ class Song
      * @Assert\Image(
      *     minWidth=300,
      *     minHeight=300,
-     *     maxWidth=300,
-     *     maxHeight=300,
+     *     allowPortrait=false,
+     *     allowLandscape=false,
      *     minWidthMessage="user.image_file.min_width",
      *     minHeightMessage="user.image_file.min_height",
      *     maxWidthMessage="user.image_file.max_width",
@@ -80,6 +80,11 @@ class Song
      * @ORM\Column(name="updatetime", type="datetime")
      */
     private $updatetime;
+
+    /**
+     * @var int
+     */
+    private $lifetime;
 
     public function __construct()
     {
@@ -276,5 +281,21 @@ class Song
         $this->imageName = $imageName;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLifetime()
+    {
+        return $this->lifetime;
+    }
+
+    /**
+     * @param int $lifetime
+     */
+    public function setLifetime($lifetime)
+    {
+        $this->lifetime = $lifetime;
     }
 }
