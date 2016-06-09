@@ -60,6 +60,7 @@ class Song
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
+     *
      */
     private $title;
     /**
