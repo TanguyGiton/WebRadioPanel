@@ -39,6 +39,6 @@ class AlbumCoverTest extends WebTestCase
 
         static::assertNotNull($result);
 
-        static::assertEquals('http://is5.mzstatic.com/image/thumb/Music/v4/f5/2d/dc/f52ddcdc-bde2-b281-709a-8d1d1e998a87/source/300x300bb.jpg', $result);
+        static::assertEquals('http://is5.mzstatic.com/image/thumb/Music/v4/f5/2d/dc/f52ddcdc-bde2-b281-709a-8d1d1e998a87/source/600x600bb.jpg', $result);
     }
 }

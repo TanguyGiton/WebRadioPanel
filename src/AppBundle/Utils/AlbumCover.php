@@ -32,7 +32,7 @@ class AlbumCover
         if (0 !== count($result)) {
             $albumcoverurl = $result[0]['albumcover'];
 
-            $albumcoverurl = str_replace('100x100', '300x300', $albumcoverurl);
+            $albumcoverurl = str_replace('100x100', '600x600', $albumcoverurl);
 
             $response = $this->restClient->get($albumcoverurl);
 
