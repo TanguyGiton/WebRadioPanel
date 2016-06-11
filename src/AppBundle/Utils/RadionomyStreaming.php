@@ -7,12 +7,11 @@ use Doctrine\Common\Cache\PhpFileCache;
 
 class RadionomyStreaming extends StreamingProvider
 {
+    const NB_OF_ATTEMPTS = 5;
+    const DELAY_BEFORE_RETRY = 1;
     private $restClient;
-
     private $cache;
-
     private $radioUID;
-
     private $apiKey;
 
     public function __construct(RestClient $restClient, PhpFileCache $cache, $radioIUD, $apiKey)
@@ -27,6 +26,7 @@ class RadionomyStreaming extends StreamingProvider
     /**
      * @param bool $albumcover
      * @return false|mixed
+     * @throws \HttpResponseException
      */
     public function getCurrentSong($albumcover = true)
     {
@@ -35,9 +35,21 @@ class RadionomyStreaming extends StreamingProvider
         } else {
             $url = 'http://api.radionomy.com/currentsong.cfm?radiouid=' . $this->getRadioUID() . '&apikey=' . $this->getApiKey() . '&callmeback=yes&type=xml&cover=yes';
 
-            $response = $this->restClient->get($url);
+            $attempts = 0;
+            do {
+                try {
+                    $xml = new \SimpleXMLElement($url, 0, true);
+                } catch (\Exception $e) {
+                    $attempts++;
+                    sleep(self::DELAY_BEFORE_RETRY);
+                    continue;
+                }
+                break;
+            } while ($attempts < self::NB_OF_ATTEMPTS);
 
-            $xml = new \SimpleXMLElement($response->getContent());
+            if ($attempts === 5) {
+                throw new \HttpResponseException('Radionomy Server unreachable or not XML content');
+            }
 
             $currentsong['artist'] = (string)$xml->track->artists;
             $currentsong['title'] = (string)$xml->track->title;

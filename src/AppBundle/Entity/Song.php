@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="song")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SongRepository")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Vich\Uploadable
  */
@@ -69,6 +70,21 @@ class Song
     private $artist;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="display_title", type="string", length=100)
+     *
+     */
+    private $displayTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="display_artist", type="string", length=100)
+     */
+    private $displayArtist;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="addtime", type="datetime")
@@ -102,7 +118,8 @@ class Song
      *
      * @return \DateTime
      */
-    public function getUpdatetime()
+    public
+    function getUpdatetime()
     {
         return $this->updatetime;
     }
@@ -114,7 +131,8 @@ class Song
      *
      * @return Song
      */
-    public function setUpdatetime($updatetime)
+    public
+    function setUpdatetime($updatetime)
     {
         $this->updatetime = $updatetime;
 
@@ -126,7 +144,8 @@ class Song
      *
      * @return \DateTime
      */
-    public function getAddtime()
+    public
+    function getAddtime()
     {
         return $this->addtime;
     }
@@ -138,7 +157,8 @@ class Song
      *
      * @return Song
      */
-    public function setAddtime($addtime)
+    public
+    function setAddtime($addtime)
     {
         $this->addtime = $addtime;
 
@@ -146,9 +166,130 @@ class Song
     }
 
     /**
+     * Fill displayArtist and displayTitle on create
+     *
+     * @ORM\PrePersist()
+     */
+    public function setDisplayInfo()
+    {
+        if ($this->getDisplayArtist() === null) {
+            $this->setDisplayArtist($this->getArtist());
+        }
+
+        if ($this->getDisplayTitle() === null) {
+            $this->setDisplayTitle($this->getTitle());
+        }
+    }
+
+    /**
+     * Get displayArtist
+     *
+     * @return string
+     */
+    public
+    function getDisplayArtist()
+    {
+        return $this->displayArtist;
+    }
+
+    /**
+     * Set displayArtist
+     *
+     * @param string $displayArtist
+     *
+     * @return Song
+     */
+    public
+    function setDisplayArtist($displayArtist)
+    {
+        $this->displayArtist = $displayArtist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return string
+     */
+    public
+    function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * Set artist
+     *
+     * @param string $artist
+     *
+     * @return Song
+     */
+    public
+    function setArtist($artist)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get displayTitle
+     *
+     * @return string
+     */
+    public
+    function getDisplayTitle()
+    {
+        return $this->displayTitle;
+    }
+
+    /**
+     * Set displayTitle
+     *
+     * @param string $displayTitle
+     *
+     * @return Song
+     */
+    public
+    function setDisplayTitle($displayTitle)
+    {
+        $this->displayTitle = $displayTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public
+    function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Song
+     */
+    public
+    function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
      * @return File
      */
-    public function getImageFile()
+    public
+    function getImageFile()
     {
         return $this->imageFile;
     }
@@ -158,7 +299,8 @@ class Song
      *
      * @return User
      */
-    public function setImageFile(File $image = null)
+    public
+    function setImageFile(File $image = null)
     {
         $this->imageFile = $image;
 
@@ -173,7 +315,8 @@ class Song
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function updateUpdatetime()
+    public
+    function updateUpdatetime()
     {
         $this->setUpdatetime(new \DateTime());
     }
@@ -183,57 +326,10 @@ class Song
      *
      * @return int
      */
-    public function getId()
+    public
+    function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Song
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get artist
-     *
-     * @return string
-     */
-    public function getArtist()
-    {
-        return $this->artist;
-    }
-
-    /**
-     * Set artist
-     *
-     * @param string $artist
-     *
-     * @return Song
-     */
-    public function setArtist($artist)
-    {
-        $this->artist = $artist;
-
-        return $this;
     }
 
     /**
@@ -241,7 +337,8 @@ class Song
      *
      * @return string
      */
-    public function getImageName()
+    public
+    function getImageName()
     {
         return $this->imageName;
     }
@@ -253,7 +350,8 @@ class Song
      *
      * @return Song
      */
-    public function setImageName($imageName)
+    public
+    function setImageName($imageName)
     {
         $this->imageName = $imageName;
 
@@ -263,7 +361,8 @@ class Song
     /**
      * @return int
      */
-    public function getLifetime()
+    public
+    function getLifetime()
     {
         return $this->lifetime;
     }
@@ -271,7 +370,8 @@ class Song
     /**
      * @param int $lifetime
      */
-    public function setLifetime($lifetime)
+    public
+    function setLifetime($lifetime)
     {
         $this->lifetime = $lifetime;
     }

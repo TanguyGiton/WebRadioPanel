@@ -29,6 +29,8 @@ class SongProviderTest extends WebTestCase
 
         static::assertNotNull($song->getTitle());
         static::assertNotNull($song->getArtist());
+        static::assertNotNull($song->getDisplayTitle());
+        static::assertNotNull($song->getDisplayArtist());
         static::assertNotNull($song->getLifetime());
 
         static::assertEquals($streaminginfo['title'], $song->getTitle());

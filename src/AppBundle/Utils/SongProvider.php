@@ -43,33 +43,42 @@ class SongProvider
         ));
 
         if (!$song) {
-            $song = new Song();
-            $song->setTitle($streaminginfo['title'])
-                ->setArtist($streaminginfo['artist']);
-
-            if (!empty($streaminginfo['albumcover'])) {
-                $albumcover = $streaminginfo['albumcover'];
+            $song = $this->em->getRepository('AppBundle:Song')->findOneBy(array(
+                'displayTitle' => $streaminginfo['title'],
+                'displayArtist' => $streaminginfo['artist'],
+            ));
+            if ($song) {
+                $song->setTitle($streaminginfo['title'])
+                    ->setArtist($streaminginfo['artist']);
             } else {
-                $albumcover = $this->albumCover->getImageOnItunes($song->getTitle(), $song->getArtist());
-            }
+                $song = new Song();
+                $song->setTitle($streaminginfo['title'])
+                    ->setArtist($streaminginfo['artist']);
 
-            if ($albumcover) {
+                if (!empty($streaminginfo['albumcover'])) {
+                    $albumcover = $streaminginfo['albumcover'];
+                } else {
+                    $albumcover = $this->albumCover->getImageOnItunes($song->getTitle(), $song->getArtist());
+                }
 
-                $infoFile = new \SplFileInfo($albumcover);
-                $basename = $infoFile->getBasename();
+                if ($albumcover) {
 
-                $path = $this->tempDir . '/' . $basename;
+                    $infoFile = new \SplFileInfo($albumcover);
+                    $basename = $infoFile->getBasename();
 
-                file_put_contents($path, file_get_contents($albumcover));
+                    $path = $this->tempDir . '/' . $basename;
 
-                $albumcoverFile = new UploadedFile($path, $basename, null, null, null, true);
-                $song->setImageFile($albumcoverFile);
+                    file_put_contents($path, file_get_contents($albumcover));
+
+                    $albumcoverFile = new UploadedFile($path, $basename, null, null, null, true);
+                    $song->setImageFile($albumcoverFile);
+                }
             }
 
             $this->em->persist($song);
             $this->em->flush();
         }
-        
+
         $song->setLifetime($streaminginfo['lifetime']);
 
         return $song;

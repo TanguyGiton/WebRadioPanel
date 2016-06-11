@@ -210,14 +210,16 @@ easy_admin:
                 fields:
                     - 'id'
                     - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
-                    - 'title'
-                    - 'artist'
+                    - 'displayTitle'
+                    - 'displayArtist'
                     - 'addtime'
                     - 'updatetime'
             form:
                 fields:
                     - 'title'
                     - 'artist'
+                    - 'displayTitle'
+                    - 'displayArtist'
                     - 'addtime'
                     - 'updatetime'
                     - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }

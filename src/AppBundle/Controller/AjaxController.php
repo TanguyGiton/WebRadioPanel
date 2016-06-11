@@ -27,8 +27,8 @@ class AjaxController extends Controller
         if ($request->isXmlHttpRequest()) {
             $song = $this->get('app.songprovider')->processCurrentSong();
 
-            $result['title'] = $song->getTitle();
-            $result['artist'] = $song->getArtist();
+            $result['title'] = $song->getDisplayTitle();
+            $result['artist'] = $song->getDisplayArtist();
             $result['lifetime'] = $song->getLifetime();
 
             $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
