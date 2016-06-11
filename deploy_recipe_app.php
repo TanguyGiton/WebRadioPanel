@@ -23,4 +23,5 @@ task('deploy:assetic:dump', function () {
 
 $shared_dir = get('shared_dirs');
 $shared_dir[] = 'web/images/profile';
+$shared_dir[] = 'web/images/albumcover';
 set('shared_dirs', $shared_dir);
