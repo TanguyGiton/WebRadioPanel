@@ -36,12 +36,14 @@ class Song
      * @var File
      */
     protected $imageFile;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */
     protected $imageName;
+
     /**
      * @var int
      *
@@ -50,12 +52,7 @@ class Song
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="uid", type="guid", unique=true)
-     */
-    private $uid;
+
     /**
      * @var string
      *
@@ -63,18 +60,21 @@ class Song
      *
      */
     private $title;
+
     /**
      * @var string
      *
      * @ORM\Column(name="artist", type="string", length=100)
      */
     private $artist;
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="addtime", type="datetime")
      */
     private $addtime;
+
     /**
      * @var \DateTime
      *
@@ -186,30 +186,6 @@ class Song
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get uid
-     *
-     * @return integer
-     */
-    public function getUid()
-    {
-        return $this->uid;
-    }
-
-    /**
-     * Set uid
-     *
-     * @param integer $uid
-     *
-     * @return Song
-     */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
-
-        return $this;
     }
 
     /**

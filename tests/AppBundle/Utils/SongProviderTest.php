@@ -30,12 +30,10 @@ class SongProviderTest extends WebTestCase
         static::assertNotNull($song->getTitle());
         static::assertNotNull($song->getArtist());
         static::assertNotNull($song->getLifetime());
-        static::assertNotNull($song->getUid());
 
         static::assertEquals($streaminginfo['title'], $song->getTitle());
         static::assertEquals($streaminginfo['artist'], $song->getArtist());
         static::assertEquals($streaminginfo['lifetime'], $song->getLifetime());
-        static::assertEquals($streaminginfo['uid'], $song->getUid());
 
         if (!empty($streaminginfo['albumcover'])) {
             static::assertNotNull($song->getImageName());

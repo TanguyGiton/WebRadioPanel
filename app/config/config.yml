@@ -209,7 +209,6 @@ easy_admin:
             list:
                 fields:
                     - 'id'
-                    - 'uid'
                     - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
                     - 'title'
                     - 'artist'

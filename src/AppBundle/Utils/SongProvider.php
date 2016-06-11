@@ -38,13 +38,13 @@ class SongProvider
         $streaminginfo = $this->streamingProvider->getCurrentSong();
 
         $song = $this->em->getRepository('AppBundle:Song')->findOneBy(array(
-            'uid' => $streaminginfo['uid']
+            'title' => $streaminginfo['title'],
+            'artist' => $streaminginfo['artist'],
         ));
 
         if (!$song) {
             $song = new Song();
-            $song->setUid($streaminginfo['uid'])
-                ->setTitle($streaminginfo['title'])
+            $song->setTitle($streaminginfo['title'])
                 ->setArtist($streaminginfo['artist']);
 
             if (!empty($streaminginfo['albumcover'])) {

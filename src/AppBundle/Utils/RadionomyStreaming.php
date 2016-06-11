@@ -39,7 +39,6 @@ class RadionomyStreaming extends StreamingProvider
 
             $xml = new \SimpleXMLElement($response->getContent());
 
-            $currentsong['uid'] = (string)$xml->track->uniqueid;
             $currentsong['artist'] = (string)$xml->track->artists;
             $currentsong['title'] = (string)$xml->track->title;
             $currentsong['albumcover'] = (string)$xml->track->cover;
