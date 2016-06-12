@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Vote;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,7 +43,7 @@ class AjaxController extends Controller
             $result['albumcover'] = $helper->asset($song, 'imageFile');
 
             $result['callback'] = $song->getLifetime() - time();
-            
+
             return new JsonResponse($result);
         } else {
             throw $this->createNotFoundException();
@@ -132,5 +133,79 @@ class AjaxController extends Controller
         } else {
             throw $this->createNotFoundException();
         }
+    }
+
+    /**
+     * @Route("/vote", name="ajax_vote")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \LogicException
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function voteAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createNotFoundException();
+        }
+
+        $session = $request->getSession();
+
+        switch ($request->query->get('positive', 'default')) {
+            case 'true':
+                $isPositive = true;
+                break;
+            case 'false':
+                $isPositive = false;
+                break;
+            default:
+                throw new BadRequestHttpException('Mandatory queries are missing');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $song = $this->get('app.songprovider')->processCurrentSong();
+
+        if ($session->has('lastVote')) {
+            $vote = $em->getRepository('AppBundle:Vote')->find($session->get('lastVote'));
+            if ($vote && $vote->getSong() === $song) {
+                if ($isPositive === $vote->isPositive()) {
+                    $em->remove($vote);
+                    $response = array(
+                        'status' => 'success',
+                        'result' => 'cancel',
+                    );
+                } else {
+                    $vote->setPositive($isPositive);
+                    $vote->setSendAt(new \DateTime());
+                    $em->persist($vote);
+                    $response = array(
+                        'status' => 'success',
+                        'result' => 'change',
+                    );
+                }
+                $em->flush();
+                return new JsonResponse($response);
+            }
+        }
+
+        $iPAddress = $request->getClientIp();
+
+        $vote = new Vote();
+        $vote
+            ->setIPAddress($iPAddress)
+            ->setSong($song)
+            ->setPositive($isPositive);
+
+        $em->persist($vote);
+        $em->flush();
+
+        $session->set('lastVote', $vote->getId());
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'result' => 'new',
+        ));
     }
 }

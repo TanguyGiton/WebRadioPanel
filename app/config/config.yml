@@ -223,6 +223,8 @@ easy_admin:
                     - 'addtime'
                     - 'updatetime'
                     - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
+        Vote:
+            class: AppBundle\Entity\Vote
 
 liip_imagine:
     resolvers:
@@ -242,7 +244,7 @@ circle_rest_client:
             CURLOPT_SSL_VERIFYPEER: false
 
 fos_js_routing:
-    routes_to_expose: [listenersmessages, currentaudience, currentsong]
+    routes_to_expose: [listenersmessages, currentaudience, currentsong, ajax_vote]
 
 vich_uploader:
     db_driver: orm
