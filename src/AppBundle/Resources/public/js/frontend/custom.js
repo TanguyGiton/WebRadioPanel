@@ -13,6 +13,9 @@ $(function () {
     /* SongInfo */
     updateSongInfo();
 
+    /* Vote */
+    initVote();
+
     /* Ajax Send Dedicace */
     ajaxSendDedicace();
 });

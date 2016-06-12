@@ -4,22 +4,25 @@ function shortString(string, nbChar) {
         string = string.substr(0, indexCut);
         string += '...';
     }
-    return string
+    return string;
 }
 
 function updateSongInfo() {
 
     var nbMaxChar = 35;
 
-    var $url = Routing.generate('currentsong');
+    var url = Routing.generate('currentsong');
 
-    $.getJSON($url, function (data) {
+    $.getJSON(url, function (data) {
 
         var $albumcover = $("#titrage");
         var $artist = $("#artist");
         var $title = $("#title");
 
         if ($artist.attr('title') != data.artist && $title.attr('title') != data.title) {
+
+            reinitVote();
+            
             $artist.text(shortString(data.artist, nbMaxChar)).attr('title', data.artist);
             $title.text(shortString(data.title, nbMaxChar)).attr('title', data.title);
 
