@@ -10,10 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * Class AjaxController
+ * @package AppBundle\Controller
+ *
+ * @Route("/ajax")
+ */
 class AjaxController extends Controller
 {
     /**
-     * @Route("ajax/currentsong.json", name="currentsong")
+     * @Route("/currentsong.json", name="currentsong")
      *
      * @param Request $request
      * @return JsonResponse
@@ -44,7 +50,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @Route("ajax/currentaudience.json", name="currentaudience")
+     * @Route("/currentaudience.json", name="currentaudience")
      *
      * @param Request $request
      * @return JsonResponse
@@ -66,7 +72,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @Route("ajax/listenersmessages.json", name="listenersmessages")
+     * @Route("/listenersmessages.json", name="listenersmessages")
      * @Security("has_role('ROLE_RADIO_HOST')")
      *
      * @param Request $request
