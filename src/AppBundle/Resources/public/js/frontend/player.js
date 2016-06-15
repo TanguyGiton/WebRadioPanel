@@ -1,19 +1,17 @@
-function initPlayer($streamurl) {
+var WEBRADIOPANEL = WEBRADIOPANEL || {};
 
-    $('#jquery-jplayer').jPlayer({
-        ready: function () {
-            $(this).jPlayer("setMedia", {
-                mp3: $streamurl,
-                oga: $streamurl
-            }).jPlayer("play");
-        },
+WEBRADIOPANEL.player = new (function () {
+
+    this.streamUrl = null;
+    this.$DOMElement = null;
+    this.debug = false;
+    this.media = {};
+    this.param = {
         swfPath: "/bundles/app/swf/jquery.jplayer.swf",
         supplied: "mp3, oga",
         wmode: "window",
         volume: 1.0,
         preload: "none",
-        //errorAlerts: true,
-        //warningAlerts: true,
         noVolume: {
             ipad: null,
             iphone: null,
@@ -26,13 +24,39 @@ function initPlayer($streamurl) {
             webos: null,
             playbook: null
         }
-    }).bind($.jPlayer.event.play, function () {
-        startSoundMeter();
-    }).bind($.jPlayer.event.pause, function () {
-        flagSoundMeter = false;
-        $(this).jPlayer("clearMedia").jPlayer("setMedia", {
-            mp3: $streamurl,
-            oga: $streamurl
-        });
-    }).jPlayer("play");
-}
+    };
+
+    this.init = function (streamUrl, $DOMElement, debug) {
+        this.build(streamUrl, $DOMElement, debug);
+        this.JPlayer();
+    };
+
+    this.build = function (streamUrl, $DOMElement, debug) {
+        this.streamUrl = streamUrl;
+        this.$DOMElement = $DOMElement;
+
+        if (typeof(debug) !== 'undefined') this.debug = debug;
+
+        this.media = {
+            mp3: this.streamUrl,
+            oga: this.streamUrl
+        };
+
+        if (this.debug) {
+            this.param.errorAlerts = true;
+            this.param.warningAlerts = true;
+        }
+    };
+
+    this.JPlayer = function () {
+
+        var obj = this;
+
+        this.$DOMElement.jPlayer(this.param).bind($.jPlayer.event.play, function () {
+            WEBRADIOPANEL.soundMeter.start();
+        }).bind($.jPlayer.event.pause, function () {
+            WEBRADIOPANEL.soundMeter.stop();
+            $(this).jPlayer("clearMedia").jPlayer("setMedia", obj.media);
+        }).jPlayer("setMedia", obj.media).jPlayer("play");
+    }
+});

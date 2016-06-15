@@ -1,47 +1,56 @@
-function initVote() {
+var WEBRADIOPANEL = WEBRADIOPANEL || {};
 
-    var $vote = $('#infos-musique').find('.vote');
-    var $voteLinks = $vote.find('a');
-    var url = Routing.generate('ajax_vote');
+WEBRADIOPANEL.vote = new (function () {
+    this.$vote = null;
+    this.$voteLinks = null;
+    this.url = Routing.generate('ajax_vote');
 
-    $voteLinks.click(function (e) {
-        e.preventDefault();
+    this.init = function ($vote) {
+        this.$vote = $vote;
+        this.$voteLinks = this.$vote.find('a');
+        this.event();
+    };
 
-        var $this = $(this);
+    this.event = function () {
 
-        if ($this.hasClass('load')) {
-            return false;
-        }
+        var obj = this;
 
-        $voteLinks.addClass('load');
+        this.$voteLinks.click(function (e) {
+            e.preventDefault();
 
-        var positive = $this.hasClass('like');
+            var $this = $(this);
 
-        $.getJSON(url, {
-            positive: positive
-        }, function (data) {
-            if (data.status === 'success') {
-                var isActive = $this.hasClass('active');
-                $voteLinks.removeClass("active");
-                if (!isActive) {
-                    $this.addClass("active");
-                }
-                $voteLinks.removeClass("load");
-            } else {
-                $voteLinks.removeClass("load");
+            if ($this.hasClass('load')) {
+                return false;
             }
-        }).fail(function () {
-            $voteLinks.removeClass("load");
+
+            obj.$voteLinks.addClass('load');
+
+            var positive = $this.hasClass('like');
+
+            $.getJSON(obj.url, {
+                positive: positive
+            }, function (data) {
+                if (data.status === 'success') {
+                    var isActive = $this.hasClass('active');
+                    obj.$voteLinks.removeClass("active");
+                    if (!isActive) {
+                        $this.addClass("active");
+                    }
+                    obj.$voteLinks.removeClass("load");
+                } else {
+                    obj.$voteLinks.removeClass("load");
+                }
+            }).fail(function () {
+                obj.$voteLinks.removeClass("load");
+            });
+
+            return false;
         });
+    };
 
-        return false;
-    });
-}
+    this.reinit = function () {
+        this.$voteLinks.removeClass("active").removeClass("load");
+    };
 
-function reinitVote() {
-    var $vote = $('#infos-musique').find('.vote');
-    var $voteLinks = $vote.find('a');
-
-    $voteLinks.removeClass("active");
-    $voteLinks.removeClass("load");
-}
+});

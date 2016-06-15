@@ -1,52 +1,65 @@
-var flagSoundMeter = false;
-var barres = [];
+var WEBRADIOPANEL = WEBRADIOPANEL || {};
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
+WEBRADIOPANEL.soundMeter = new (function () {
+    this.barres = [];
+    this.loop = null;
+    this.$DOMElement = null;
 
-function initSoundMeter(nbBarres) {
-    if (barres.length === 0) {
-        var i;
-        for (i = 0; i < nbBarres; i++) {
-            $('#bg-countdown').append('<div id="barre-' + i + '" class="barre"></div>');
-            barres.push($('#barre-' + i));
-            barres[i].css('position', 'absolute').css('left', parseInt(100 / nbBarres) * i + '%');
-            barres[i].css('bottom', '0').css('background', 'rgba(255,255,255,0.1)').css('z-index', '5').css('width', parseInt(100 / nbBarres) + '%');
-            barres[i].css('height', '50px').css('border', '1px solid #000');
+    this.defaultHeight = 50;
+
+    this.getRandomInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+
+    this.init = function ($DOMElement, nbBarres) {
+
+        this.$DOMElement = $DOMElement;
+
+        if (this.barres.length === 0) {
+            var i;
+            for (i = 0; i < nbBarres; i++) {
+                this.$DOMElement.append('<div id="barre-' + i + '" class="barre"></div>');
+                this.barres.push($('#barre-' + i));
+                this.barres[i].css('position', 'absolute').css('left', parseInt(100 / nbBarres) * i + '%');
+                this.barres[i].css('bottom', '0').css('background', 'rgba(255,255,255,0.1)').css('z-index', '5').css('width', parseInt(100 / nbBarres) + '%');
+                this.barres[i].css('height', this.defaultHeight + 'px').css('border', '1px solid #000');
+            }
         }
-    }
-}
+    };
 
-function animSoundMeter() {
-    if (flagSoundMeter) {
-        var length = barres.length;
+    this.run = function () {
+        var length = this.barres.length;
 
         if (length !== 0) {
             var i;
             for (i = 0; i < length; i++) {
-                barres[i].css('height', getRandomInt(10, 250) + 'px');
+                this.barres[i].css('height', this.getRandomInt(10, 250) + 'px');
             }
         }
 
-        setTimeout(animSoundMeter, 1000);
-    } else {
-        stopSoundMeter();
-    }
-}
+        var obj = this;
 
-function stopSoundMeter() {
-    var length = barres.length;
+        this.loop = setTimeout(function () {
+            obj.run();
+        }, 1000);
+    };
 
-    if (length !== 0) {
-        var i;
-        for (i = 0; i < length; i++) {
-            barres[i].css('height', '50px');
+    this.start = function () {
+        this.run();
+    };
+
+    this.stop = function () {
+
+        clearTimeout(this.loop);
+
+        var length = this.barres.length;
+
+        if (length !== 0) {
+            var i;
+            for (i = 0; i < length; i++) {
+                this.barres[i].css('height', this.defaultHeight + 'px');
+            }
         }
     }
-}
 
-function startSoundMeter() {
-    flagSoundMeter = true;
-    animSoundMeter();
-}
+});
