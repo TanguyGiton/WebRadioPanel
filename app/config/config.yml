@@ -214,6 +214,14 @@ easy_admin:
                     - 'displayArtist'
                     - 'addtime'
                     - 'updatetime'
+            show:
+                fields:
+                    - 'id'
+                    - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
+                    - 'displayTitle'
+                    - 'displayArtist'
+                    - 'addtime'
+                    - 'updatetime'
             form:
                 fields:
                     - 'title'
@@ -225,6 +233,19 @@ easy_admin:
                     - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
         Vote:
             class: AppBundle\Entity\Vote
+            list:
+                fields:
+                    - 'id'
+                    - 'sendAt'
+                    - 'iPAddress'
+                    - { property: 'song', type: 'association' }
+                    - 'positive'
+            form:
+                fields:
+                    - 'sendAt'
+                    - 'iPAddress'
+                    - 'positive'
+                    - 'song'
 
 liip_imagine:
     resolvers:

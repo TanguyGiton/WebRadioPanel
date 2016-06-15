@@ -375,4 +375,10 @@ class Song
     {
         $this->lifetime = $lifetime;
     }
+
+    public function __toString()
+    {
+        return $this->getTitle() . ' - ' . $this->getArtist();
+    }
+
 }
