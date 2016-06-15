@@ -32,8 +32,13 @@ WEBRADIOPANEL.soundMeter = new (function () {
 
         if (length !== 0) {
             var i;
+            var height;
+            var teinte;
             for (i = 0; i < length; i++) {
-                this.barres[i].css('height', this.getRandomInt(10, 250) + 'px');
+                height = this.getRandomInt(50, 250);
+                teinte = 90 - parseInt((height - 50) / 240 * 90);
+                this.barres[i].css('height', height + 'px');
+                this.barres[i].css('background', 'hsla(' + teinte + ',76%,55%,0.3)');
             }
         }
 
@@ -58,6 +63,7 @@ WEBRADIOPANEL.soundMeter = new (function () {
             var i;
             for (i = 0; i < length; i++) {
                 this.barres[i].css('height', this.defaultHeight + 'px');
+                this.barres[i].css('background', 'hsla(90,76%,55%,0.3)');
             }
         }
     }
