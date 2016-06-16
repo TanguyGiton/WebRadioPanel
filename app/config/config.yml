@@ -167,6 +167,8 @@ easy_admin:
         date: 'd/m/Y'
         time: 'H:i'
         datetime: 'd/m/Y H:i:s'
+    list:
+        actions: ['show']
     entities:
         User:
             class: AppBundle\Entity\User
