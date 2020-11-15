@@ -62,6 +62,8 @@ doctrine:
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
+    port:      "%mailer_port%"
+    encryption: "%mailer_encryption%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
@@ -151,7 +153,7 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
-        address: noreply@webradiopanel.com
+        address: 'noreply@%site_domain%'
         sender_name: WebRadioPanel
     registration:
         form:
@@ -165,6 +167,8 @@ easy_admin:
         date: 'd/m/Y'
         time: 'H:i'
         datetime: 'd/m/Y H:i:s'
+    list:
+        actions: ['show']
     entities:
         User:
             class: AppBundle\Entity\User
@@ -172,6 +176,7 @@ easy_admin:
             list:
                 title: 'Les utilisateurs'
                 fields:
+                    - 'id'
                     - { property: 'imageName', type: 'image', base_path: '/images/profile/' }
                     - 'username'
                     - 'firstName'
@@ -193,7 +198,7 @@ easy_admin:
                     - 'city'
                     - { property: 'mobilePhoneNumber', type: Misd\PhoneNumberBundle\Form\Type\PhoneNumberType, type_options: { default_region: 'FR', format: 'national' } }
                     - { property: 'birthdate', type_options: { widget: 'single_text'} }
-                    - { property: 'imageFile', type: 'file' }
+                    - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
                     - 'description'
                     - 'locked'
                     - 'expired'
@@ -201,6 +206,48 @@ easy_admin:
 
         Message:
             class: AppBundle\Entity\Message
+        Song:
+            class: AppBundle\Entity\Song
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
+                    - 'displayTitle'
+                    - 'displayArtist'
+                    - 'addtime'
+                    - 'updatetime'
+            show:
+                fields:
+                    - 'id'
+                    - { property: 'imageName', type: 'image', base_path: '/images/albumcover/' }
+                    - 'displayTitle'
+                    - 'displayArtist'
+                    - 'addtime'
+                    - 'updatetime'
+            form:
+                fields:
+                    - 'title'
+                    - 'artist'
+                    - 'displayTitle'
+                    - 'displayArtist'
+                    - 'addtime'
+                    - 'updatetime'
+                    - { property: 'imageFile', type: Vich\UploaderBundle\Form\Type\VichImageType }
+        Vote:
+            class: AppBundle\Entity\Vote
+            list:
+                fields:
+                    - 'id'
+                    - 'sendAt'
+                    - 'iPAddress'
+                    - { property: 'song', type: 'association' }
+                    - 'positive'
+            form:
+                fields:
+                    - 'sendAt'
+                    - 'iPAddress'
+                    - 'positive'
+                    - 'song'
 
 liip_imagine:
     resolvers:
@@ -220,7 +267,7 @@ circle_rest_client:
             CURLOPT_SSL_VERIFYPEER: false
 
 fos_js_routing:
-    routes_to_expose: [listenersmessages, currentaudience, currentsong]
+    routes_to_expose: [listenersmessages, currentaudience, currentsong, ajax_vote]
 
 vich_uploader:
     db_driver: orm
@@ -228,4 +275,8 @@ vich_uploader:
         profile_picture:
             uri_prefix: /images/profile
             upload_destination: "%kernel.root_dir%/../web/images/profile"
+            namer: vich_uploader.namer_uniqid
+        album_cover:
+            uri_prefix: /images/albumcover
+            upload_destination: "%kernel.root_dir%/../web/images/albumcover"
             namer: vich_uploader.namer_uniqid

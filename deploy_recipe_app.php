@@ -8,6 +8,8 @@ task('deploy:fos:js-routing:dump', function () {
 
 })->desc('FOS JS Routing Dump');
 
+after('deploy:vendors', 'deploy:fos:js-routing:dump');
+
 task('deploy:assetic:dump', function () {
     if (!get('dump_assets')) {
         return;
@@ -19,8 +21,7 @@ task('deploy:assetic:dump', function () {
 
 })->desc('Dump assets');
 
-after('deploy:vendors', 'deploy:fos:js-routing:dump');
-
 $shared_dir = get('shared_dirs');
 $shared_dir[] = 'web/images/profile';
+$shared_dir[] = 'web/images/albumcover';
 set('shared_dirs', $shared_dir);

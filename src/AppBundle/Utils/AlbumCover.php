@@ -11,11 +11,20 @@ class AlbumCover
 
     private $country = 'fr';
 
+    /**
+     * AlbumCover constructor.
+     * @param RestClient $restClient
+     */
     public function __construct(RestClient $restClient)
     {
         $this->restClient = $restClient;
     }
 
+    /**
+     * @param $title
+     * @param $artist
+     * @return mixed|null
+     */
     public function getImageOnItunes($title, $artist)
     {
         $result = $this->searchOnItunes($title . ' ' . $artist, 1);
@@ -23,7 +32,7 @@ class AlbumCover
         if (0 !== count($result)) {
             $albumcoverurl = $result[0]['albumcover'];
 
-            $albumcoverurl = str_replace('100x100', '300x300', $albumcoverurl);
+            $albumcoverurl = str_replace('100x100', '600x600', $albumcoverurl);
 
             $response = $this->restClient->get($albumcoverurl);
 
@@ -35,6 +44,11 @@ class AlbumCover
         return null;
     }
 
+    /**
+     * @param $query
+     * @param int $limit
+     * @return array
+     */
     public function searchOnItunes($query, $limit = 5)
     {
         $result = [];

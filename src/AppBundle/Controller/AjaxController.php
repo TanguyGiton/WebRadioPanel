@@ -2,40 +2,56 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Vote;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * Class AjaxController
+ * @package AppBundle\Controller
+ *
+ * @Route("/ajax")
+ */
 class AjaxController extends Controller
 {
     /**
-     * @Route("ajax/currentsong.json", name="currentsong")
+     * @Route("/currentsong.json", name="currentsong")
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
+     * @throws \LogicException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function currentSongAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $streaminginfo = $this->get('app.streaminginfo');
+            $song = $this->get('app.songprovider')->processCurrentSong();
 
-            $currentsong = $streaminginfo->getCurrentSong();
+            $result['title'] = $song->getDisplayTitle();
+            $result['artist'] = $song->getDisplayArtist();
+            $result['lifetime'] = $song->getLifetime();
 
-            $currentsong['callback'] = $currentsong['lifetime'] - time();
+            $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
 
-            return new JsonResponse($currentsong);
+            $result['albumcover'] = $helper->asset($song, 'imageFile');
 
+            $result['callback'] = $song->getLifetime() - time();
+
+            return new JsonResponse($result);
         } else {
             throw $this->createNotFoundException();
         }
     }
 
     /**
-     * @Route("ajax/currentaudience.json", name="currentaudience")
+     * @Route("/currentaudience.json", name="currentaudience")
      *
      * @param Request $request
      * @return JsonResponse
@@ -57,7 +73,8 @@ class AjaxController extends Controller
     }
 
     /**
-     * @Route("ajax/listenersmessages.json", name="listenersmessages")
+     * @Route("/listenersmessages.json", name="listenersmessages")
+     * @Security("has_role('ROLE_RADIO_HOST')")
      *
      * @param Request $request
      * @return Response
@@ -72,9 +89,6 @@ class AjaxController extends Controller
      */
     public function listenersMessagesAction(Request $request)
     {
-
-        $this->denyAccessUnlessGranted('ROLE_RADIO_HOST');
-
         if ($request->isXmlHttpRequest()) {
 
             $last = $request->query->get('last', '');
@@ -119,5 +133,79 @@ class AjaxController extends Controller
         } else {
             throw $this->createNotFoundException();
         }
+    }
+
+    /**
+     * @Route("/vote", name="ajax_vote")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \LogicException
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function voteAction(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createNotFoundException();
+        }
+
+        $session = $request->getSession();
+
+        switch ($request->query->get('positive', 'default')) {
+            case 'true':
+                $isPositive = true;
+                break;
+            case 'false':
+                $isPositive = false;
+                break;
+            default:
+                throw new BadRequestHttpException('Mandatory queries are missing');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $song = $this->get('app.songprovider')->processCurrentSong();
+
+        if ($session->has('lastVote')) {
+            $vote = $em->getRepository('AppBundle:Vote')->find($session->get('lastVote'));
+            if ($vote && $vote->getSong() === $song) {
+                if ($isPositive === $vote->isPositive()) {
+                    $em->remove($vote);
+                    $response = array(
+                        'status' => 'success',
+                        'result' => 'cancel',
+                    );
+                } else {
+                    $vote->setPositive($isPositive);
+                    $vote->setSendAt(new \DateTime());
+                    $em->persist($vote);
+                    $response = array(
+                        'status' => 'success',
+                        'result' => 'change',
+                    );
+                }
+                $em->flush();
+                return new JsonResponse($response);
+            }
+        }
+
+        $iPAddress = $request->getClientIp();
+
+        $vote = new Vote();
+        $vote
+            ->setIPAddress($iPAddress)
+            ->setSong($song)
+            ->setPositive($isPositive);
+
+        $em->persist($vote);
+        $em->flush();
+
+        $session->set('lastVote', $vote->getId());
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'result' => 'new',
+        ));
     }
 }

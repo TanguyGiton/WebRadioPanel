@@ -22,7 +22,7 @@ class IndexController extends Controller
         $message = new Message();
         $message
             ->setSendAt(new \DateTime())
-            ->setIPAdress($request->getClientIp());
+            ->setIPAddress($request->getClientIp());
 
         $form = $this->createFormBuilder($message)
             ->add('name', null, ['label' => 'label.name'])

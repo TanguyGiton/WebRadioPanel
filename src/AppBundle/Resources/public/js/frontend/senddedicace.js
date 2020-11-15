@@ -1,32 +1,38 @@
-function ajaxSendDedicace() {
+var WEBRADIOPANEL = WEBRADIOPANEL || {};
 
-    var $form = $("#form-dedicaces");
+WEBRADIOPANEL.dedicaces = new (function () {
+    this.$form = $("#form-dedicaces");
+    this.$submit = this.$form.find('button[type=submit]');
+    this.$loading = $('<i class="fa fa-circle-o-notch fa-spin"></i>');
+    this.$ok = $('<i class="fa fa-check"></i>');
+    this.$error = $('<i class="fa fa-times"></i>');
 
-    var $submit = $form.find('button[type=submit]');
+    this.init = function () {
+        this.$submit.append(' ').append(this.$loading.hide()).append(this.$ok.hide()).append(this.$error.hide());
+        this.event();
+    };
 
-    var $loading = $('<i class="fa fa-circle-o-notch fa-spin"></i>');
-    var $ok = $('<i class="fa fa-check"></i>');
-    var $error = $('<i class="fa fa-times"></i>');
+    this.event = function () {
+        var obj = this;
 
-    $submit.append(' ').append($loading.hide()).append($ok.hide()).append($error.hide());
+        this.$form.submit(function (e) {
+            e.preventDefault();
 
-    $form.submit(function (e) {
-        e.preventDefault();
+            obj.$loading.show();
+            obj.$submit.attr('disabled', 'disabled');
 
-        $loading.show();
-        $submit.attr('disabled', 'disabled');
+            var formSerialize = $(this).serialize();
+            $.post(window.location, formSerialize, function (response) {
 
-        var formSerialize = $(this).serialize();
-        $.post(window.location, formSerialize, function (response) {
-
-            if (response.status == 'success') {
-                $form.find('textarea').val('');
-                $ok.show().delay(3000).fadeOut();
-            } else {
-                $error.show().delay(3000).fadeOut();
-            }
-            $submit.removeAttr('disabled');
-            $loading.hide();
-        }, 'JSON');
-    });
-}
+                if (response.status == 'success') {
+                    obj.$form.find('textarea').val('');
+                    obj.$ok.show().delay(3000).fadeOut();
+                } else {
+                    obj.$error.show().delay(3000).fadeOut();
+                }
+                obj.$submit.removeAttr('disabled');
+                obj.$loading.hide();
+            }, 'JSON');
+        });
+    };
+});

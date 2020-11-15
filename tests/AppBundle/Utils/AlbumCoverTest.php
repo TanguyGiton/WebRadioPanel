@@ -13,7 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AlbumCoverTest extends WebTestCase
 {
-    public $AlbumCover;
+    protected static $LIMIT = 5;
+    protected $AlbumCover;
 
     public function setUp()
     {
@@ -23,9 +24,9 @@ class AlbumCoverTest extends WebTestCase
 
     public function testSearchOnItunes()
     {
-        $result = $this->AlbumCover->searchOnItunes('baby', 5);
+        $result = $this->AlbumCover->searchOnItunes('baby', static::$LIMIT);
 
-        static::assertCount(5, $result);
+        static::assertCount(static::$LIMIT, $result);
 
         static::assertEquals('Justin Bieber', $result[0]['artist']);
         static::assertEquals('Baby (feat. Ludacris)', $result[0]['title']);
@@ -38,6 +39,6 @@ class AlbumCoverTest extends WebTestCase
 
         static::assertNotNull($result);
 
-        static::assertEquals('http://is5.mzstatic.com/image/thumb/Music/v4/f5/2d/dc/f52ddcdc-bde2-b281-709a-8d1d1e998a87/source/300x300bb.jpg', $result);
+        static::assertEquals('http://is5.mzstatic.com/image/thumb/Music/v4/f5/2d/dc/f52ddcdc-bde2-b281-709a-8d1d1e998a87/source/600x600bb.jpg', $result);
     }
 }

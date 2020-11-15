@@ -424,4 +424,18 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = parent::getRoles();
+
+        if (count($roles) > 1) {
+            array_pop($roles);
+        }
+
+        return $roles;
+    }
 }

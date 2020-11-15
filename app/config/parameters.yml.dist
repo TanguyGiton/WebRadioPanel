@@ -7,8 +7,12 @@ parameters:
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
+    mailer_port:       ~
+    mailer_encryption: ~
     mailer_user:       ~
     mailer_password:   ~
+
+    site_domain:       webradiopanel
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

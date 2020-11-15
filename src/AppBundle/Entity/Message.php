@@ -37,12 +37,12 @@ class Message
     /**
      * @var string
      *
-     * @ORM\Column(name="IPAdress", type="string", length=45)
+     * @ORM\Column(name="IPAddress", type="string", length=45)
      *
      * @Assert\NotBlank()
      * 
      */
-    private $iPAdress;
+    private $iPAddress;
 
     /**
      * @var string
@@ -98,30 +98,6 @@ class Message
     }
 
     /**
-     * Get iPAdress
-     *
-     * @return string
-     */
-    public function getIPAdress()
-    {
-        return $this->iPAdress;
-    }
-
-    /**
-     * Set iPAdress
-     *
-     * @param string $iPAdress
-     *
-     * @return Message
-     */
-    public function setIPAdress($iPAdress)
-    {
-        $this->iPAdress = $iPAdress;
-
-        return $this;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -168,5 +144,28 @@ class Message
 
         return $this;
     }
-}
 
+    /**
+     * Get iPAddress
+     *
+     * @return string
+     */
+    public function getIPAddress()
+    {
+        return $this->iPAddress;
+    }
+
+    /**
+     * Set iPAddress
+     *
+     * @param string $iPAddress
+     *
+     * @return Message
+     */
+    public function setIPAddress($iPAddress)
+    {
+        $this->iPAddress = $iPAddress;
+
+        return $this;
+    }
+}

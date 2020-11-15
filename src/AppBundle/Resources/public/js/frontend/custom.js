@@ -4,15 +4,18 @@ $(function () {
     $('body').removeClass('no-js').addClass('js');
 
     /* SoundMeter */
-    initSoundMeter(50);
+    WEBRADIOPANEL.soundMeter.init($('#bg-countdown'), 50);
 
     /* Player */
-    var $streamurl = "http://streaming.radionomy.com/webradiopanel";
-    initPlayer($streamurl);
+    var streamUrl = "http://streaming.radionomy.com/webradiopanel";
+    WEBRADIOPANEL.player.init(streamUrl, $('#jquery-jplayer'));
 
     /* SongInfo */
-    updateSongInfo();
+    WEBRADIOPANEL.songinfo.init();
+
+    /* Vote */
+    WEBRADIOPANEL.vote.init($('#infos-musique').find('.vote'));
 
     /* Ajax Send Dedicace */
-    ajaxSendDedicace();
+    WEBRADIOPANEL.dedicaces.init();
 });

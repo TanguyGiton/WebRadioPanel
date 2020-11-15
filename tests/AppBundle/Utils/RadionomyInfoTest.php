@@ -6,9 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RadionomyInfoTest extends WebTestCase
 {
-    public $StreamInfo;
+    protected $StreamInfo;
 
-    public $cache;
+    protected $cache;
 
     public function setUp()
     {
@@ -20,8 +20,6 @@ class RadionomyInfoTest extends WebTestCase
 
     public function testGetCurrentSong()
     {
-        $this->cache->delete('currentsong');
-
         $data = $this->StreamInfo->getCurrentSong();
 
         static::assertNotNull($data['title']);
@@ -41,8 +39,6 @@ class RadionomyInfoTest extends WebTestCase
 
     public function testGetCurrentAudience()
     {
-        $this->cache->delete('currentaudience');
-
         $data = $this->StreamInfo->getCurrentAudience();
 
         static::assertNotNull($data['currentaudience']);
@@ -50,5 +46,11 @@ class RadionomyInfoTest extends WebTestCase
 
         static::assertTrue(is_int($data['currentaudience']));
         static::assertTrue(is_int($data['lifetime']));
+    }
+
+    public function tearDown()
+    {
+        $this->cache->delete('currentsong');
+        $this->cache->delete('currentaudience');
     }
 }

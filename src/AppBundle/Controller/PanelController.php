@@ -8,10 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class PanelController
+ * @package AppBundle\Controller
+ *
+ * @Route("/panel")
+ */
 class PanelController extends Controller
 {
     /**
-     * @Route("/panel/board",name="board")
+     * @Route("/board",name="board")
      * @Security("has_role('ROLE_RADIO_HOST')")
      *
      * @param Request $request

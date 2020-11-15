@@ -20,6 +20,11 @@ class RolesHelper
             $roles[$val] = $val;
         });
 
+        $keys = array_keys($this->rolesHierarchy);
+        $keys = array_combine($keys, $keys);
+
+        $roles += $keys;
+
         return array_unique($roles);
     }
 }
